@@ -1,0 +1,167 @@
+/* Estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-principal: #a93226; /* Color principal */
+    --color-secundario: #333; /* Color de texto */
+    --color-fondo: #f4f4f4; /* Fondo neutro */
+    --color-hover: #b42e22; /* Color hover */
+}
+
+html, body {
+    height: 100%; /* Asegura que el body ocupe todo el alto de la pantalla */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    color: var(--color-secundario);
+    background-color: var(--color-fondo);
+}
+
+/* Encabezado */
+header {
+    background-color: var(--color-principal);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.logo {
+    width: 120px;
+    margin-right: 15px;
+}
+
+h1#title {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+/* Navegación */
+.nav-bar ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-bar li {
+    display: inline;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.nav-bar a:hover {
+    color: black;
+}
+
+/* Sección de formulario de empleado */
+.employee-form-section {
+    flex: 1; /* Se expande para ocupar el espacio disponible */
+    max-width: 800px; /* Ancho máximo para el formulario */
+    margin: 30px auto; /* Centramos el formulario */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: var(--color-principal);
+    margin-bottom: 20px;
+}
+
+/* Estilos para el formulario */
+.employee-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px; /* Espacio entre los campos */
+}
+
+label {
+    margin-bottom: 5px; /* Espacio entre la etiqueta y el input */
+    font-weight: bold; /* Negrita para las etiquetas */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* Ancho completo */
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+
+select:focus {
+    border-color: var(--color-principal); /* Cambia el color del borde al enfocar */
+}
+
+/* Estilo para el botón de registro */
+.btn-outline-custom {
+    color: var(--color-principal);
+    border: 2px solid var(--color-principal);
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 15px; /* Espacio superior */
+}
+
+.btn-outline-custom:hover {
+    background-color: var(--color-principal);
+    color: white;
+}
+
+.ruta {
+    font-size: 0.9em;
+    color: #333;
+    margin: 20px;
+} 
+
+.ruta a {
+    color: #a93226;
+    text-decoration: none;
+}
+
+
+/* Footer */
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto; /* Empuja el footer hacia abajo */
+}
+
+footer .social-icons a {
+    margin: 0 10px;
+    color: white;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+footer .social-icons a:hover {
+    color: var(--color-principal);
+}

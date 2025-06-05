@@ -1,0 +1,298 @@
+:root {
+    --color-principal: #a93226;
+    --color-secundario: #333;
+    --color-fondo: #f4f4f4;
+    --color-hover: #b42e22;
+    --color-boton: #28a745;
+    --color-boton-eliminar: #dc3545;
+}
+
+
+/* Encabezado */
+header {
+    background-color: var(--color-principal);
+    color: white;
+    display: flex;  /* para centrar y distribuir el logo */
+    justify-content: space-between; /* y el menu de forma ordenada */
+    align-items: center;
+    padding: 15px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+    align-items: left;
+}
+
+.nav-bar ul {
+    list-style: none;
+    display: flex; /* para mostrar los elementos en linea */
+}
+
+.nav-bar li {
+    margin-right: 20px; /* agregar espacio entre los enlaces */
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-bar a:hover {
+    color: black; /* para que cuando el cursor este encima del enlace se pase a negro */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--color-secundario);
+    background-color: var(--color-fondo);
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: var(--color-principal);
+}
+
+.actions {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.btn-agregar {
+    padding: 10px 15px;
+    background-color: var(--color-principal);
+    color: var(--color-fondo);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-agregar:hover {
+    background-color: #218838;
+}
+
+.productos-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.productos-table th, .productos-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-fondo);
+}
+
+.productos-table th {
+    background-color: var(--color-principal);
+    color: white;
+    font-weight: bold;
+}
+
+.productos-table tbody tr:hover {
+    background-color: var(--color-fondo);
+}
+
+.producto-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.btn-ver {
+    padding: 8px 12px;
+    background-color: var(--color-principal);
+    color: var(--color-fondo);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-ver:hover {
+    background-color: var(--color-hover);
+}
+
+
+/*seccion empleado */
+
+.nav-empleado {
+    background-color: var(--color-secundario);
+    display: flex; /* para usar flexbox en el contenedor */
+    justify-content: center; /* centrado horizontal */
+    padding: 10px 0; /* agregar algo de padding para espacio alrededor */
+}
+
+.nav-empleado ul {
+    list-style: none;
+    display: flex;
+    padding: 0; /* eliminar padding adicional */
+    margin: 0; /* eliminar margen adicional */
+}
+
+.nav-empleado li {
+    margin: 0 20px; /* aplicar margen de ambos lados para espaciar */
+}
+
+.nav-empleado a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-empleado a:hover {
+    color: var(--color-principal);
+}
+
+/* Ocultar el formulario de edición por defecto */
+.edit-form {
+    display: none;
+}
+
+/* Estilos para el contenedor de detalles del producto */
+/* Contenedor principal de detalles del producto */
+.product-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    background-color: var(--color-fondo);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagen del producto */
+.product-image {
+    width: 200px;
+    border-radius: 8px;
+}
+
+/* Información del producto */
+.product-info {
+    max-width: 600px;
+}
+
+/* Estilos para el título, precio y descripción */
+.product-info h2 {
+    font-size: 1.5em;
+    color: var(--color-principal);
+    margin-bottom: 15px;
+}
+
+.product-info label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: var(--color-secundario);
+}
+
+.input-price, .input-description {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Altura específica para la descripción */
+.input-description {
+    height: 100px;
+    resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+/* Botones de acción */
+.btn-save, .btn-delete {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px 0 0;
+    font-size: 1rem;
+    color: white;
+    background-color: var(--color-principal);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background-color: var(--color-secundario);
+}
+
+/* Hover de los botones */
+.btn-save:hover {
+    background-color: var(--color-hover);
+}
+
+.btn-delete:hover {
+    background-color: #555;
+}
+
+/* Estilos generales del formulario */
+.form-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: var(--color-fondo);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-container h2 {
+    color: var(--color-principal);
+    margin-bottom: 20px;
+}
+
+.product-form label {
+    display: block;
+    margin: 15px 0 5px;
+    font-weight: bold;
+    color: var(--color-secundario);
+}
+
+/* Estilos para los campos de entrada */
+.input-text, .input-description, .input-file {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Campo de texto multilinea */
+.input-description {
+    resize: vertical;
+    height: 100px;
+}
+
+/* Botón de envío */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: var(--color-principal);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background-color: var(--color-hover);
+}

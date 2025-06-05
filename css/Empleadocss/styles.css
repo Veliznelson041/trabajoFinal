@@ -1,0 +1,436 @@
+/* Estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-principal: #a93226; /* Color principal */
+    --color-secundario: #333; /* Color de texto */
+    --color-fondo: #f4f4f4; /* Fondo neutro */
+    --color-hover: #b42e22; /* Color hover */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--color-secundario);
+    background-color: var(--color-fondo);
+}
+
+/* Encabezado */
+header {
+    background-color: var(--color-principal);
+    color: white;
+    display: flex;  /* para centrar y distribuir el logo */
+    justify-content: space-between; /* y el menu de forma ordenada */
+    align-items: center;
+    padding: 15px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+    align-items: left;
+}
+
+.nav-bar ul {
+    list-style: none;
+    display: flex; /* para mostrar los elementos en linea */
+}
+
+.nav-bar li {
+    margin-right: 20px; /* agregar espacio entre los enlaces */
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-bar a:hover {
+    color: black; /* para que cuando el cursor este encima del enlace se pase a negro */
+}
+
+/* Banner principal */
+
+
+.banner h1, .banner p {
+    position: absolute;
+    top: 50%;
+    left: 50%; /* Aseguran que el texto este centrado en el fondo */
+    transform: translate(-50%, -50%);
+    color: var(--color-principal);
+}
+
+.welcome-section {
+    text-align: center;
+}
+
+/* Productos destacados */
+.featured-products {
+    padding: 40px 0;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.featured-products h2 {
+    color: var(--color-principal);
+    margin-bottom: 20px;
+}
+
+.card {
+    width: 16rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden; /* el contenido desbordado se oculta */
+    transition: transform 0.3s ease;
+    margin: 0 auto;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* la imagen se recorta y ajusta para llenar el contenedor */
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card h5 {
+    font-size: 1em; /*tamaño de la fuente */
+    margin-bottom: 5px; /*añade espacio */
+    color: var(--color-secundario);
+}
+
+.card-footer {
+    background-color: black;
+    border-top: none; /* elimina el borde superio del pie de la tarjeta*/
+}
+footer{
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.btn-outline-custom {
+    color: var(--color-principal);
+    border: 2px solid var(--color-principal);
+    padding: 8px 16px;
+    font-size: 0.9em;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-custom:hover {
+    background-color: var(--color-principal);
+    color: white;
+}
+
+/* Contenedor de productos destacados */
+.featured-products .card-container {
+    display: flex; /*Convierte al contenedor en un elemento de tipo "flexbox", lo cual permite organizar los elementos hijos (en este caso, las tarjetas) en una fila o columna */
+    justify-content: space-between; /* distribuye los elementos hijo  a lo largo del contenedor*/
+    flex-wrap: wrap; /* Permite que los elementos dentro del contenedor se ajusten en múltiples líneas cuando no hay suficiente espacio en una sola línea */
+    gap: 20px; /* espacio entre tarjetas */
+}
+
+.search-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Casilla de Busqueda */
+#search-input {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid var(--color-principal);
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.btn-search {
+    padding: 10px 15px;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-search:hover {
+    background-color: var(--color-hover);
+
+}
+
+/* Menu desplegable */
+.menu {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-link {
+    display: block;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    background-color: var(--color-principal); /* Cambia esto a tu color deseado */
+}
+
+.menu-link:hover {
+    background-color: var(--color-hover); /* Cambia esto a tu color deseado */
+}
+
+.submenu {
+    display: none; /* Ocultar el menú por defecto */
+    position: absolute;
+    background-color: var(--color-secundario); /* Cambia esto a tu color deseado */
+    list-style-type: none;
+    padding: 10;
+    margin: 0;
+    top: 100%; /* Justo debajo del elemento principal */
+    left: 0;
+    z-index: 1;
+}
+
+.submenu li {
+    width: 100%; /* Mantener cada elemento en una fila */
+}
+
+.submenu li a {
+    padding: 10px;
+    display: block;
+    color: white;
+    text-decoration: none;
+    background-color: var(--color-secundario); /* Cambia esto a tu color deseado */
+    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+}
+
+.submenu li a:hover {
+    background-color: #575757; /* Color de fondo al pasar el cursor */
+}
+
+.menu:hover .submenu {
+    display: block; /* Mostrar el submenú al pasar el ratón */
+}
+
+/*seccion empleado */
+
+.nav-empleado {
+    background-color: var(--color-secundario);
+    display: flex; /* para usar flexbox en el contenedor */
+    justify-content: center; /* centrado horizontal */
+    padding: 10px 0; /* agregar algo de padding para espacio alrededor */
+}
+
+.nav-empleado ul {
+    list-style: none;
+    display: flex;
+    padding: 0; /* eliminar padding adicional */
+    margin: 0; /* eliminar margen adicional */
+}
+
+.nav-empleado li {
+    margin: 0 20px; /* aplicar margen de ambos lados para espaciar */
+}
+
+.nav-empleado a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-empleado a:hover {
+    color: var(--color-principal);
+}
+
+/* Simulacion para editar productos destacados */
+
+.edit-form {
+    display: none;
+}
+
+.edit-button:focus + .edit-form {
+    display: block;
+}
+
+.edit-form input,
+.edit-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.save-button, .cancel-button {
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+/* Simulacion para editar o eliminar imagen */
+
+.image-container {
+    position: relative;
+}
+
+/* Estilo del botón de eliminación de imagen */
+.delete-image-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+/* Oculta el formulario de subida de imagen */
+.upload-image-form {
+    display: none;
+    margin-top: 10px;
+}
+
+/* Mostrar el formulario de subida de imagen cuando el botón de eliminación es "presionado" */
+.delete-image-button:focus + .upload-image-form {
+    display: block;
+}
+
+.upload-image-form label,
+.upload-image-form input,
+.upload-image-form .upload-button {
+    display: block;
+    margin-top: 5px;
+}
+
+.upload-button {
+    margin-top: 10px;
+}
+
+/* Buzon de Consultas */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid var(--color-secundario);
+    text-align: left;
+}
+
+th {
+    background-color: var(--color-principal);
+    color: white;
+}
+
+tr:hover {
+    background-color: var(--color-hover);
+    color: white;
+}
+
+.ver-mensaje {
+    display: inline-block;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.ver-mensaje:hover {
+    background-color: var(--color-hover);
+}
+
+h2{
+    text-align: center;
+}
+
+/* Ver mensaje */
+
+li {
+    list-style: none; /* Eliminar el estilo de lista */
+    margin: 20px 0; /* Margen superior e inferior */
+    display: flex; /* Usar flexbox para alinear elementos */
+    align-items: center; /* Centrar verticalmente */
+}
+
+.input-btn {
+    padding: 10px; /* Espaciado interno */
+    width: 70%; /* Ancho del campo de entrada */
+    border: 1px solid var(--color-secundario); /* Borde del campo */
+    border-radius: 4px; /* Bordes redondeados */
+    margin-right: 10px; /* Espacio entre el input y el botón */
+    font-size: 16px; /* Tamaño de fuente */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.input-btn::placeholder {
+    color: var(--color-secundario); /* Color del texto del placeholder */
+    opacity: 0.7; /* Opacidad del placeholder */
+}
+
+.btn-resp {
+    background-color: var(--color-principal); /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    padding: 10px 15px; /* Espaciado interno */
+    cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+
+.btn-resp:hover {
+    background-color: var(--color-hover); /* Color de fondo al pasar el mouse */
+}
+
+/* PROOVEDORES */
+
+.proveedor-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.proveedor-card {
+    background-color: white;
+    border: 1px solid var(--color-secundario);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.proveedor-card:hover {
+    transform: scale(1.03);
+}
+
+.proveedor-card h2 {
+    margin: 0 0 10px;
+    color: var(--color-principal);
+}
+
+.proveedor-card p {
+    margin: 5px 0;
+    color: var(--color-secundario);
+}
+
+/* LISTADO PRODUCTOS */
+

@@ -1,0 +1,351 @@
+/* Estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-principal: #a93226; /* Color principal */
+    --color-secundario: #333; /* Color de texto */
+    --color-fondo: #f4f4f4; /* Fondo neutro */
+    --color-hover: #b42e22; /* Color hover */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--color-secundario);
+    background-color: var(--color-fondo);
+}
+
+/* Encabezado */
+header {
+    background-color: var(--color-principal);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+}
+
+.nav-bar ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-bar li {
+    margin-right: 20px;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-bar a:hover {
+    color: black;
+}
+
+/* Banner principal */
+.banner {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+}
+
+.banner h1, .banner p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-principal);
+}
+
+.botonver {
+    padding: 10px 15px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botonver:hover {
+    background-color: var(--color-hover);
+    transform: scale(1.05);
+}
+
+.welcome-section {
+    text-align: center;
+}
+
+/* Productos destacados */
+.featured-products {
+    padding: 40px 0;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.featured-products h2 {
+    color: var(--color-principal);
+    margin-bottom: 20px;
+}
+
+.card {
+    width: 16rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    margin: 0 auto;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card h5 {
+    font-size: 1em;
+    margin-bottom: 5px;
+    color: var(--color-secundario);
+}
+
+.card-footer {
+    background-color: black;
+    border-top: none;
+}
+footer{
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.btn-outline-custom {
+    color: var(--color-principal);
+    border: 2px solid var(--color-principal);
+    padding: 8px 16px;
+    font-size: 0.9em;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-custom:hover {
+    background-color: var(--color-principal);
+    color: white;
+}
+
+/* Contenedor de productos destacados */
+.featured-products .card-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.search-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Casilla de Busqueda */
+#search-input {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid var(--color-principal);
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.btn-search {
+    padding: 10px 15px;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-search:hover {
+    background-color: var(--color-hover);
+}
+
+/* Menu desplegable */
+.menu {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-link {
+    display: block;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    background-color: var(--color-principal); /* Cambia esto a tu color deseado */
+}
+
+.menu-link:hover {
+    background-color: var(--color-hover); /* Cambia esto a tu color deseado */
+}
+
+.submenu {
+    display: none; /* Ocultar el menú por defecto */
+    position: absolute;
+    background-color: var(--color-secundario); /* Cambia esto a tu color deseado */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    top: 100%; /* Justo debajo del elemento principal */
+    left: 0;
+    z-index: 1;
+}
+
+.submenu li {
+    width: 100%; /* Mantener cada elemento en una fila */
+}
+
+.submenu li a {
+    padding: 10px;
+    display: block;
+    color: white;
+    text-decoration: none;
+    background-color: var(--color-secundario); /* Cambia esto a tu color deseado */
+    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+}
+
+.submenu li a:hover {
+    background-color: #575757; /* Color de fondo al pasar el cursor */
+}
+
+.menu:hover .submenu {
+    display: block; /* Mostrar el submenú al pasar el ratón */
+}
+
+/* Estilos adicionales si es necesario */
+.menu {
+    margin-right: 20px; /* Espacio entre menús */
+}
+
+.menu-link,
+.submenu li a {
+    transition: background-color 0.3s; /* Transición suave para el hover */
+}
+
+
+
+
+
+
+
+
+/* Estilos para el catálogo de productos */
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Contenedor de filtros */
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.filters input[type="text"],
+.filters select,
+.filters input[type="range"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+.product-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #fff;
+    transition: transform 0.3s;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 15px 0;
+}
+
+.product-card p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.product-card .price {
+    font-weight: bold;
+    color: #e63946;
+    margin: 10px 0;
+}
+
+.product-card button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #457b9d;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.product-card button:hover {
+    background-color: #1d3557;
+}

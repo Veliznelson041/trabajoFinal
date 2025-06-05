@@ -1,0 +1,172 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+}
+/* header {
+    display: flex;
+    flex-direction: column; 
+} */
+.ruta {
+    font-size: 0.9em;
+    color: #333;
+    margin: 20px;
+} 
+
+.ruta a {
+    color: #a93226;
+    text-decoration: none;
+}
+ 
+.ruta a:hover {
+    text-decoration: underline;
+}
+
+h1, h2 {
+    color: #a93226;
+}
+
+/*logo de tienda*/
+
+/* Encabezado */
+header {
+    background-color:  #a93226;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+
+.header-container h1 {
+    color: white;
+    font-size: 2rem; /* Ajusta el tamaño según prefieras */
+    margin-left: 1rem; /* Espacio entre la imagen y el texto */
+}
+
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+}
+
+.nav-bar ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-bar li {
+    margin-right: 20px;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-bar a:hover {
+    color: black;
+}
+
+
+.formulario-contacto {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+input, select, textarea, button {
+    width: 90%;
+    padding:10px;
+    margin-bottom: 15px;
+    border: 1px solid #2b2323;
+    border-radius: 5px;
+
+}
+
+.tipo-consulta{
+    width: 94%;
+}
+
+button {
+    background-color: #a93226;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    width: 94%;
+}
+
+button:hover {
+    background-color: #8b2a1f;
+}
+
+.informacion, .opciones {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.informacion h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem; 
+    color: #a93226; 
+}
+.informacion h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem; 
+    color: #333;
+}
+.informacion a {
+    color: #a93226;
+    text-decoration: none;
+}
+#mapa {
+    width: 100%;
+    height: 200px;
+    background-color: #ddd;
+    margin-top: 10px;
+}
+
+.opciones a {
+    display: block;
+    color: #a93226;
+    margin: 10px 0;
+    text-decoration: none;
+}
+
+.opciones a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    width: 100%; 
+   
+}

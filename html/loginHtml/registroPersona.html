@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro de Persona</title>
+  <link rel="stylesheet" href="../../css/loginCss/register.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt_eZYMvS26mdHNwVQw-zHWqDRdSz5XzAVHQ&s"
+        alt="Logo de Suplementos Dynamite" class="logo"/>
+      <h1 id="title">Suplementos Dynamite</h1>
+    </div>
+    <p id="date-time"></p>
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="/html/catalogo-Carrito-Producto-HTML/catalogo.html">Catálogo</a></li>
+        <li><a href="../contactoHtml/contacto.html">Contacto</a></li>
+        <li><a href="/html/loginHtml/login.html" class="btn-login"><i class="fas fa-user"></i> Iniciar Sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <nav class="ruta">
+    <a href="../index.html">Inicio</a> &gt;
+    <a href="login.html">Iniciar Sesión</a> &gt;
+    <a href="../loginHtml/register.html">Registrarse</a>
+  </nav>
+
+  <div class="container">
+    <h1>Registro de Persona</h1>
+    <form id="register-form" novalidate>
+      <label for="nombres">Nombres:</label>
+      <input type="text" id="nombre" name="nombre" required aria-describedby="help-nombres"/>
+      <small id="help-nombres">Solo letras. No se permiten números ni símbolos.</small>
+
+      <label for="apellidos">Apellidos:</label>
+      <input type="text" id="apellido" name="apellido" required aria-describedby="help-apellidos"/>
+      <small id="help-apellidos">Solo letras. No se permiten números ni símbolos.</small>
+
+      <label for="dni">DNI:</label>
+      <input type="text" id="dni" name="dni" required maxlength="8" minlength="7" aria-describedby="help-dni"/>
+      <small id="help-dni">Debe contener entre 7 y 8 dígitos numéricos.</small>
+
+      <label for="calle">Calle:</label>
+      <input type="text" id="calle" name="calle" required aria-describedby="help-calle"/>
+      <small id="help-calle">Puede contener letras y números.</small>
+
+      <label for="provincia">Seleccione una provincia:</label>
+      <select id="provincia" name="provincia" required>
+        <option value="">--Seleccione--</option>
+        <option value="Buenos Aires">Buenos Aires</option>
+        <option value="Catamarca">Catamarca</option>
+        <option value="Chaco">Chaco</option>
+        <option value="Chubut">Chubut</option>
+        <option value="Córdoba">Córdoba</option>
+        <option value="Corrientes">Corrientes</option>
+        <option value="Entre Ríos">Entre Ríos</option>
+        <option value="Formosa">Formosa</option>
+        <option value="Jujuy">Jujuy</option>
+        <option value="La Pampa">La Pampa</option>
+        <option value="La Rioja">La Rioja</option>
+        <option value="Mendoza">Mendoza</option>
+        <option value="Misiones">Misiones</option>
+        <option value="Neuquén">Neuquén</option>
+        <option value="Río Negro">Río Negro</option>
+        <option value="Salta">Salta</option>
+        <option value="San Juan">San Juan</option>
+        <option value="San Luis">San Luis</option>
+        <option value="Santa Cruz">Santa Cruz</option>
+        <option value="Santa Fe">Santa Fe</option>
+        <option value="Santiago del Estero">Santiago del Estero</option>
+        <option value="Tierra del Fuego">Tierra del Fuego</option>
+        <option value="Tucumán">Tucumán</option>
+      </select>
+
+      <label for="genero">Género:</label>
+      <select id="genero" name="genero" required>
+        <option value="">--Seleccione--</option>
+        <option value="masculino">Masculino</option>
+        <option value="femenino">Femenino</option>
+        <option value="otro">Otro</option>
+      </select>
+
+      <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+      <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required />
+
+      <label for="imagen">Imagen de perfil:</label>
+      <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" required aria-describedby="help-imagen"/>
+      <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
+
+      <p><a href="../../docs/RegistroPersona.pdf" download>Proceso de registro de persona (PDF)</a></p>
+
+      <button type="submit">Registrarse</button>
+      <p><a href="../loginHtml/login.html">Volver al inicio de sesión</a></p>
+    </form>
+  </div>
+
+  <footer>
+    <p>
+      Dirección: Av. Pres. Arturo Illia 902, Catamarca, Argentina | Email:
+      contacto@suplementosdynamite.com | Tel: (123) 456-7890
+    </p>
+    <div class="social-icons">
+      <a href="https://wa.me/1234567890" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.instagram.com/suplementosdynamite" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+    <p>&copy; 2024 Suplementos Dynamite. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // Reloj en vivo
+    const dateTimeElement = document.getElementById("date-time");
+    const updateDateTime = () => {
+      const now = new Date();
+      dateTimeElement.innerText = now.toLocaleString();
+    };
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    // Validaciones
+    function soloTexto(valor) {
+      return /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(valor.trim());
+    }
+
+    function soloNumeros(valor) {
+      return /^\d+$/.test(valor);
+    }
+
+    function textoYNumeros(valor) {
+      return /^[A-Za-z0-9\s]+$/.test(valor.trim());
+    }
+
+    function validarArchivo(input) {
+      const archivo = input.files[0];
+      if (!archivo) return false;
+      const extensionesPermitidas = ["jpg", "jpeg", "png"];
+      const extension = archivo.name.split(".").pop().toLowerCase();
+      return extensionesPermitidas.includes(extension);
+    }
+    
+    // Validación de fecha de nacimiento
+    document.getElementById("fecha_nacimiento").addEventListener("change", function() {
+      const fecha = new Date(this.value);
+      const hoy = new Date();
+      if (fecha >= hoy) {
+        alert("La fecha de nacimiento no puede ser futura.");
+        this.value = "";
+        return;
+      }
+      // Verificar si es mayor de edad (18 años)
+      const edad = hoy.getFullYear() - fecha.getFullYear();
+      const m = hoy.getMonth() - fecha.getMonth();
+      const d = hoy.getDate() - fecha.getDate();
+      let esMayor = edad > 18 || (edad === 18 && (m > 0 || (m === 0 && d >= 0)));
+      if (!esMayor) {
+        alert("Debes ser mayor de 18 años para registrarte.");
+        this.value = "";
+      }
+  
+    }); 
+
+
+    document.getElementById('register-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const nombres = document.getElementById("nombre").value;
+      const apellidos = document.getElementById("apellido").value;
+      const dni = document.getElementById("dni").value;
+      const calle = document.getElementById("calle").value;
+      const imagen = document.getElementById("imagen");
+
+      let errores = [];
+
+      if (!soloTexto(nombres)) errores.push("El nombre debe contener solo letras .");
+      if (nombres.trim().length < 3) errores.push("El nombre debe contener 3 letras o más.");
+      if (!soloTexto(apellidos)) errores.push("El apellido debe contener solo letras.");
+      if (apellidos.trim().length < 3) errores.push("El apellido debe contener 3 letras o más.");
+
+      if (!soloNumeros(dni) || dni.length < 7 || dni.length > 8)
+        errores.push("El DNI debe tener entre 7 y 8 dígitos numéricos.");
+      if (!textoYNumeros(calle)) errores.push("La calle debe contener solo letras y/o números.");
+      if (!validarArchivo(imagen)) errores.push("Debe subir una imagen JPG, JPEG o PNG válida.");
+
+      if (errores.length > 0) {
+        alert(errores.join("\n"));
+      } else {
+        alert("Formulario válido. Enviando...");
+        // Aquí podés enviar al backend si tenés configurado
+        // this.submit(); // o enviar con fetch si es SPA
+        // window.location.href = "register.html";
+
+        const formulario = document.getElementById('register-form');
+        const formData = new FormData(formulario);
+        try {
+          const resp = await fetch('http://localhost:3000/personas', {
+            method: 'POST',
+            body: formData
+          });
+          const resultado = await resp.json();
+          if (resp.ok) {
+            alert("Registro exitoso");
+            window.location.href ="/html/loginHtml/register.html";
+          } else {
+          // manejar error dni duplicado
+          if (resp.status === 409 && resultado.campo === 'dni') {
+            alert('Error: ' + resultado.error);
+            document.getElementById("dni").focus();
+            document.getElementById("dni").select();
+            return;
+          }
+            alert("Error al registrar la persona: " + resultado.error);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+    });
+
+
+  </script>
+</body>
+</html>

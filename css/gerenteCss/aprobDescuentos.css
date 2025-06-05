@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+
+
+}
+
+main {
+    flex: 1;
+}
+
+
+.ruta {
+    font-size: 0.9em;
+    color: #333;
+    margin: 20px;
+} 
+
+.ruta a {
+    color: #a93226;
+    text-decoration: none;
+}
+ 
+.ruta a:hover {
+    text-decoration: underline;
+}
+
+h1, h2 {
+    color: #a93226;
+}
+
+/*logo de tienda*/
+
+/* Encabezado */
+header {
+    background-color:  #a93226;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+
+.header-container h1 {
+    color: white;
+    font-size: 2rem; /* Ajusta el tamaño según prefieras */
+    margin-left: 1rem; /* Espacio entre la imagen y el texto */
+}
+
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+}
+
+.nav-bar ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-bar li {
+    margin-right: 20px;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-bar a:hover {
+    color: black;
+}
+
+/***********************/
+main > h2 {
+    text-align: center;
+    margin: 10px;
+}
+
+.descuentos table {
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #a93226;
+    color: white;
+}
+
+.btn-descuento {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin: 2px;
+}
+
+.btn-descuento.verde {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-descuento.azul {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-descuento.rojo {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-aprobar, .btn-historial {
+    background-color: #a93226;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    width: 100%; 
+   
+}

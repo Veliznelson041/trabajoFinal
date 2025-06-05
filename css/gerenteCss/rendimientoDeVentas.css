@@ -1,0 +1,128 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+
+
+}
+
+main {
+    flex: 1;
+}
+
+
+.ruta {
+    font-size: 0.9em;
+    color: #333;
+    margin: 20px;
+} 
+
+.ruta a {
+    color: #a93226;
+    text-decoration: none;
+}
+ 
+.ruta a:hover {
+    text-decoration: underline;
+}
+
+h1, h2 {
+    color: #a93226;
+}
+
+/*logo de tienda*/
+
+/* Encabezado */
+header {
+    background-color:  #a93226;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+
+.header-container h1 {
+    color: white;
+    font-size: 2rem; /* Ajusta el tamaño según prefieras */
+    margin-left: 1rem; /* Espacio entre la imagen y el texto */
+}
+
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+}
+
+.nav-bar ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-bar li {
+    margin-right: 20px;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-bar a:hover {
+    color: black;
+}
+
+
+main {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+main > h2 {
+    text-align: center;
+    margin: 10px;
+}
+
+
+section {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    width: 100%; 
+   
+}

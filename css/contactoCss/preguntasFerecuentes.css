@@ -1,0 +1,122 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+}
+
+.ruta {
+    font-size: 0.9em;
+    color: #333;
+    margin: 20px;
+}
+.ruta a {
+    color: #a93226;
+    text-decoration: none;
+}
+
+.ruta a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    color: #a93226;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Encabezado */
+header {
+    background-color:  #a93226;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+
+.header-container h1 {
+    color: white;
+    font-size: 2rem; /* Ajusta el tamaño según prefieras */
+    margin-left: 1rem; /* Espacio entre la imagen y el texto */
+}
+
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+}
+
+.nav-bar ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-bar li {
+    margin-right: 20px;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-bar a:hover {
+    color: black;
+}
+
+
+/* Estilo general para la sección de preguntas frecuentes */
+.faq-section {
+    max-width: 800px; /* Limita el ancho para un mejor aspecto */
+    margin: 0 auto; /* Centra la sección en la pantalla */
+    padding: 1rem;
+}
+
+/* Estilos para cada artículo o pregunta */
+.preguntas-section {
+    background-color: #f8f9fa; /* Fondo claro */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 1rem 1.5rem; /* Espaciado interno */
+    margin-bottom: 1rem; /* Espacio entre cada pregunta */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: transform 0.2s; /* Efecto suave al hacer hover */
+}
+
+
+
+/* Estilos para el título de cada pregunta */
+.preguntas-article h3 {
+    color: #a93226; /* Color del texto */
+    font-size: 1.2rem; /* Tamaño de fuente */
+    margin-bottom: 0.5rem; /* Espacio debajo del título */
+}
+
+/* Estilos para el párrafo de cada respuesta */
+.preguntas-articletem p {
+    color: #333; /* Color del texto */
+    line-height: 1.5; /* Altura de línea para mejor lectura */
+}
+    
+
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    width: 100%; 
+   
+}

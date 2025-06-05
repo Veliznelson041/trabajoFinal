@@ -1,0 +1,168 @@
+/* Estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-principal: #a93226;
+    --color-secundario: #333;
+    --color-fondo: #f4f4f4;
+    --color-hover: #b42e22;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--color-secundario);
+    background-color: var(--color-fondo);
+}
+
+header {
+    background-color: var(--color-principal);
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+.header-container .logo {
+    width: 50px;
+    vertical-align: middle;
+}
+
+.nav-bar {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.nav-bar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-bar ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.nav-bar ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.perfil-container {
+    margin: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.perfil-form {
+    display: grid;
+    gap: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.form-group input:disabled {
+    background-color: #f0f0f0;
+}
+
+.form-group button {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.form-group button:hover {
+    background-color: #2980b9;
+}
+
+/* Ocultar el checkbox que controla el estado editable */
+.form-group input[type="checkbox"] {
+    display: none;
+}
+
+/* Hacer los campos editables cuando el checkbox está marcado */
+.form-group input[type="checkbox"]:checked ~ .perfil-form input {
+    background-color: white;
+    border: 1px solid #ccc;
+}
+
+/* Cambiar el color del botón de editar cuando se puede editar */
+.form-group input[type="checkbox"]:checked ~ .perfil-form button {
+    background-color: #f39c12;
+}
+
+/* Estilos adicionales para el botón de cerrar sesión */
+.cerrar-sesion {
+    background-color: #e74c3c;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.cerrar-sesion:hover {
+    background-color: #c0392b;
+}
+
+.nav-empleado {
+    background-color: var(--color-secundario);
+    display: flex; /* para usar flexbox en el contenedor */
+    justify-content: center; /* centrado horizontal */
+    padding: 10px 0; /* agregar algo de padding para espacio alrededor */
+}
+
+.nav-empleado ul {
+    list-style: none;
+    display: flex;
+    padding: 0; /* eliminar padding adicional */
+    margin: 0; /* eliminar margen adicional */
+}
+
+.nav-empleado li {
+    margin: 0 20px; /* aplicar margen de ambos lados para espaciar */
+}
+
+.nav-empleado a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-empleado a:hover {
+    color: var(--color-principal);
+}
+.card-footer {
+    background-color: black;
+    border-top: none; /* elimina el borde superio del pie de la tarjeta*/
+}
+footer{
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}

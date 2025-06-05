@@ -1,0 +1,268 @@
+/* Estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-principal: #a93226; /* Color principal */
+    --color-secundario: #333; /* Color de texto */
+    --color-fondo: #f4f4f4; /* Fondo neutro */
+    --color-hover: #b42e22; /* Color hover */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--color-secundario);
+    background-color: var(--color-fondo);
+}
+
+/* Encabezado */
+header {
+    background-color: var(--color-principal);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+}
+
+.nav-bar ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-bar li {
+    margin-right: 20px;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-bar a:hover {
+    color: black;
+}
+
+/* Banner principal */
+.banner {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+}
+
+.banner h1, .banner p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-principal);
+}
+
+.botonver {
+    padding: 10px 15px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botonver:hover {
+    background-color: var(--color-hover);
+    transform: scale(1.05);
+}
+
+.welcome-section {
+    text-align: center;
+}
+
+
+
+/* Breadcrumb Navigation */
+.ruta {
+    font-size: 14px;
+    padding: 10px 20px;
+    background-color: #ecf0f1;
+    color: #34495e;
+}
+
+.ruta a {
+    color: #3498db;
+}
+
+.ruta a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+/* Main Content */
+.product-detail {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 1000px;
+}
+
+.product-image {
+    max-width: 100%;
+    width: 300px;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-info h2 {
+    font-size: 28px;
+    color: #e74c3c;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #16a085;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.btn-add-to-cart {
+    background-color: #e67e22;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #d35400;
+}
+
+/* Reviews Section */
+.reviews-section {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1000px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-section h3 {
+    font-size: 22px;
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+.average-rating {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #f39c12;
+    margin-bottom: 10px;
+}
+
+.rating-stars i {
+    color: #f39c12;
+}
+
+.rating-score {
+    margin-left: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.total-reviews {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #666;
+}
+
+.reviews-list {
+    margin-top: 20px;
+}
+
+.review-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.review-item:last-child {
+    border-bottom: none;
+}
+
+.review-user {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.review-stars i {
+    color: #f39c12;
+    margin-right: 2px;
+}
+
+.review-comment {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+
+
+
+
+
+/* Footer */
+footer {
+    padding: 20px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+
+

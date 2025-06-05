@@ -1,0 +1,261 @@
+
+/* Estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-principal: #a93226; /* Color principal */
+    --color-secundario: #333; /* Color de texto */
+    --color-fondo: #f4f4f4; /* Fondo neutro */
+    --color-hover: #b42e22; /* Color hover */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--color-secundario);
+    background-color: var(--color-fondo);
+}
+
+/* Encabezado */
+header {
+    background-color: var(--color-principal);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+}
+
+.nav-bar ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-bar li {
+    margin-right: 20px;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-bar a:hover {
+    color: black;
+}
+
+/* Banner principal */
+.banner {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+}
+
+.banner h1, .banner p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-principal);
+}
+
+.botonver {
+    padding: 10px 15px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botonver:hover {
+    background-color: var(--color-hover);
+    transform: scale(1.05);
+}
+
+.welcome-section {
+    text-align: center;
+}
+
+
+
+/* Breadcrumb Navigation */
+.ruta {
+    font-size: 14px;
+    padding: 10px 20px;
+    background-color: #ecf0f1;
+    color: #34495e;
+}
+
+.ruta a {
+    color: #3498db;
+}
+
+.ruta a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+/* Estilos básicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-principal: #a93226; /* Color principal */
+    --color-secundario: #333; /* Color de texto */
+    --color-fondo: #f4f4f4; /* Fondo neutro */
+    --color-hover: #b42e22; /* Color hover */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--color-secundario);
+    background-color: var(--color-fondo);
+}
+
+/* Sección de resumen de la orden */
+.order-summary {
+    max-width: 500px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.order-summary h2 {
+    color: var(--color-principal);
+    margin-bottom: 15px;
+}
+
+.order-summary p {
+    font-size: 1em;
+    margin: 10px 0;
+}
+
+/* Sección de información de envío */
+.shipping-info {
+    max-width: 500px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shipping-info h2 {
+    color: var(--color-principal);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.shipping-info label {
+    display: block;
+    font-size: 0.9em;
+    margin-top: 10px;
+    color: var(--color-secundario);
+}
+
+.shipping-info input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid var(--color-principal);
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+/* Botón de confirmación */
+.confirm-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-btn:hover {
+    background-color: var(--color-hover);
+    transform: scale(1.05);
+}
+
+/* Breadcrumb Navigation */
+.ruta {
+    font-size: 14px;
+    padding: 10px 20px;
+    background-color: #ecf0f1;
+    color: #34495e;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.ruta a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.ruta a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos adicionales si es necesario */
+input:focus, .confirm-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--color-principal);
+}
+
+.confirmation-message {
+    text-align: center; /* Centrar el texto */
+    margin-bottom: 20px; /* Espacio inferior para separar del resumen */
+}
+
+
+
+
+
+
+/* Footer */
+footer {
+    padding: 20px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+
+footer p {
+    margin: 5px 0;
+}
