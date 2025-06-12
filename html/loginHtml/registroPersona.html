@@ -49,7 +49,7 @@
       <label for="calle">Calle:</label>
       <input type="text" id="calle" name="calle" required aria-describedby="help-calle"/>
       <small id="help-calle">Puede contener letras y números.</small>
-
+      
       <label for="provincia">Seleccione una provincia:</label>
       <select id="provincia" name="provincia" required>
         <option value="">--Seleccione--</option>
@@ -78,6 +78,14 @@
         <option value="Tucumán">Tucumán</option>
       </select>
 
+      <label for="departamento">Departamento:</label>
+      <input type="text" id="departamento" name="departamento" required aria-describedby="help-departamento"/>
+      <small id="help-departamento">Puede contener letras y números.</small>
+
+      <label for="localidad">Localidad:</label>
+      <input type="text" id="localidad" name="localidad" required aria-describedby="help-localidad"/>
+      <small id="help-localidad">Puede contener letras y números.</small>
+    
       <label for="genero">Género:</label>
       <select id="genero" name="genero" required>
         <option value="">--Seleccione--</option>
@@ -91,6 +99,14 @@
 
       <label for="imagen">Imagen de perfil:</label>
       <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" required aria-describedby="help-imagen"/>
+      <!-- se mostrará una vista previa de la imagen seleccionada -->
+      <div id="image-preview-container" style="display: none; margin-top: 10px;">
+         <img id="image-preview" src="" alt="Vista previa" style="max-width: 250px; max-height: 250px;">
+          <button type="button" id="remove-image" style="display: block; margin-top: 5px;">
+            Eliminar imagen
+           </button>
+      </div>
+
       <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
 
       <p><a href="../../docs/RegistroPersona.pdf" download>Proceso de registro de persona (PDF)</a></p>
@@ -122,6 +138,44 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
+      // Vista previa de imagen
+     const imagenInput = document.getElementById('imagen');
+     const previewContainer = document.getElementById('image-preview-container');
+     const imagePreview = document.getElementById('image-preview');
+     const removeButton = document.getElementById('remove-image');
+
+    imagenInput.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      const file = this.files[0];
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        imagePreview.src = e.target.result;
+        previewContainer.style.display = 'block';
+      }
+      
+      reader.readAsDataURL(file);
+    }
+    });
+
+    // Eliminar imagen seleccionada
+    removeButton.addEventListener('click', function() {
+      imagenInput.value = '';
+      imagePreview.src = '';
+      previewContainer.style.display = 'none';
+    });
+
+    // Validar archivo (actualizado)
+    function validarArchivo(input) {
+      if (!input.files || input.files.length === 0) return false;
+      
+      const archivo = input.files[0];
+      const extensionesPermitidas = ["jpg", "jpeg", "png", "svg"];
+      const extension = archivo.name.split('.').pop().toLowerCase();
+      
+      return extensionesPermitidas.includes(extension);
+    }
+
     // Validaciones
     function soloTexto(valor) {
       return /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(valor.trim());
@@ -138,7 +192,7 @@
     function validarArchivo(input) {
       const archivo = input.files[0];
       if (!archivo) return false;
-      const extensionesPermitidas = ["jpg", "jpeg", "png"];
+      const extensionesPermitidas = ["jpg", "jpeg", "png","svg"];
       const extension = archivo.name.split(".").pop().toLowerCase();
       return extensionesPermitidas.includes(extension);
     }

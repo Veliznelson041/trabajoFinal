@@ -1,5 +1,30 @@
 const db = require('../db');
 
+// Función para eliminar archivos de imagen
+const deleteImageFile = (filename) => {
+  if (filename && filename !== 'default.jpg') {
+    const filePath = path.join(__dirname, '../uploads', filename);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+  }
+};
+
+exports.obtenerImagenPersona = async (req, res) => {
+  try {
+    const [rows] = await db.execute('SELECT imagen FROM personas WHERE id = ?', [req.params.id]);
+    
+    if (!rows.length || !rows[0].imagen) {
+      return res.status(404).send('Imagen no encontrada');
+    }
+
+    const imagePath = path.join(__dirname, '../uploads', rows[0].imagen);
+    res.sendFile(imagePath);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener imagen' });
+  }
+};
+
 // POST - Registrar persona
 exports.registrarPersona = async (req, res) => {
   const { nombre, apellido, dni, calle, provincia, departamento, localidad, genero, fecha_nacimiento } = req.body;
@@ -10,8 +35,14 @@ exports.registrarPersona = async (req, res) => {
       'INSERT INTO personas (nombre, apellido, dni, calle, provincia, departamento, localidad, genero, fecha_nacimiento, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [nombre, apellido, dni, calle, provincia, departamento, localidad, genero, fecha_nacimiento, imagen]
     );
+      // Si se subió una imagen, eliminar la anterior si existe////
+    if (req.file && req.body.oldImage && req.body.oldImage !== 'default.jpg') {
+      deleteImageFile(req.body.oldImage);
+    }
     res.status(201).json({ id: result.insertId, message: 'Persona registrada exitosamente.', imagen_url: `http://localhost:3000/uploads/${imagen}` });
   } catch (error) {
+     // Si falla la inserción, eliminar la imagen subida
+    if (req.file) deleteImageFile(req.file.filename);
      if (error.code === 'ER_DUP_ENTRY') {
       return res.status(409).json({ 
         error: 'El DNI ya está registrado',
@@ -38,12 +69,24 @@ exports.editarPersona = async (req, res) => {
   const { nombres, apellidos, dni, calle, provincia, departamento, localidad, genero, fecha_nacimiento } = req.body;
 
   try {
+        // Obtener imagen anterior
+    const [current] = await db.execute('SELECT imagen FROM personas WHERE id = ?', [id]);
+    const oldFilename = current[0]?.imagen;
+
     const [result] = await db.execute(
       'UPDATE personas SET nombre = ?, apellido = ?, dni = ?, calle = ?, provincia = ?, departamento = ?, localidad = ?, genero = ?, fecha_nacimiento = ? WHERE id = ?',
       [nombres, apellidos, dni, calle, provincia, departamento, localidad, genero, fecha_nacimiento, id]
     );
+    
+    // Eliminar imagen anterior si se subió una nueva
+    if (req.file && oldFilename && oldFilename !== 'default.jpg') {
+      deleteImageFile(oldFilename);
+    }
     res.json({ message: 'Persona actualizada correctamente.' });
   } catch (error) {
+       // Si falla la actualización, eliminar la nueva imagen subida
+    if (req.file) deleteImageFile(req.file.filename);
+
     res.status(500).json({ error: 'Error al actualizar persona.', detalles: error });
   }
 };
@@ -53,7 +96,15 @@ exports.eliminarPersona = async (req, res) => {
   const { id } = req.params;
 
   try {
+     // Obtener imagen antes de eliminar
+    const [current] = await db.execute('SELECT imagen FROM personas WHERE id = ?', [id]);
+    const filename = current[0]?.imagen;
+
     const [result] = await db.execute('DELETE FROM personas WHERE id = ?', [id]);
+     // Eliminar imagen asociada
+    if (filename && filename !== 'default.jpg') {
+      deleteImageFile(filename);
+    }
     res.json({ message: 'Persona eliminada correctamente.' });
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar persona.', detalles: error });
