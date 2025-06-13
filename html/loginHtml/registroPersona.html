@@ -6,6 +6,9 @@
   <title>Registro de Persona</title>
   <link rel="stylesheet" href="../../css/loginCss/register.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <!-- Leaflet CSS y JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
   <header>
@@ -49,7 +52,7 @@
       <label for="calle">Calle:</label>
       <input type="text" id="calle" name="calle" required aria-describedby="help-calle"/>
       <small id="help-calle">Puede contener letras y números.</small>
-
+      
       <label for="provincia">Seleccione una provincia:</label>
       <select id="provincia" name="provincia" required>
         <option value="">--Seleccione--</option>
@@ -78,6 +81,14 @@
         <option value="Tucumán">Tucumán</option>
       </select>
 
+      <label for="departamento">Departamento:</label>
+      <input type="text" id="departamento" name="departamento" required aria-describedby="help-departamento"/>
+      <small id="help-departamento">Puede contener letras y números.</small>
+
+      <label for="localidad">Localidad:</label>
+      <input type="text" id="localidad" name="localidad" required aria-describedby="help-localidad"/>
+      <small id="help-localidad">Puede contener letras y números.</small>
+    
       <label for="genero">Género:</label>
       <select id="genero" name="genero" required>
         <option value="">--Seleccione--</option>
@@ -91,7 +102,22 @@
 
       <label for="imagen">Imagen de perfil:</label>
       <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" required aria-describedby="help-imagen"/>
+      <!-- se mostrará una vista previa de la imagen seleccionada -->
+      <div id="image-preview-container" style="display: none; margin-top: 10px;">
+         <img id="image-preview" src="" alt="Vista previa" style="max-width: 250px; max-height: 250px;">
+          <button type="button" id="remove-image" style="display: block; margin-top: 5px;">
+            Eliminar imagen
+           </button>
+      </div>
+
       <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
+
+
+      <!-- Geolocalización automática -->
+      <input type="hidden" name="latitud" id="latitud">
+      <input type="hidden" name="longitud" id="longitud">
+      <p id="geo-msg" style="color: green; font-size: 0.9em;"></p>
+
 
       <p><a href="../../docs/RegistroPersona.pdf" download>Proceso de registro de persona (PDF)</a></p>
 
@@ -99,6 +125,11 @@
       <p><a href="../loginHtml/login.html">Volver al inicio de sesión</a></p>
     </form>
   </div>
+
+  <!-- Mapa de ubicación -->
+<h3>Tu ubicación detectada</h3>
+<div id="map" style="height: 300px; width: 100%; margin-bottom: 20px;"></div>
+
 
   <footer>
     <p>
@@ -122,6 +153,44 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
+      // Vista previa de imagen
+     const imagenInput = document.getElementById('imagen');
+     const previewContainer = document.getElementById('image-preview-container');
+     const imagePreview = document.getElementById('image-preview');
+     const removeButton = document.getElementById('remove-image');
+
+    imagenInput.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      const file = this.files[0];
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        imagePreview.src = e.target.result;
+        previewContainer.style.display = 'block';
+      }
+      
+      reader.readAsDataURL(file);
+    }
+    });
+
+    // Eliminar imagen seleccionada
+    removeButton.addEventListener('click', function() {
+      imagenInput.value = '';
+      imagePreview.src = '';
+      previewContainer.style.display = 'none';
+    });
+
+    // Validar archivo (actualizado)
+    function validarArchivo(input) {
+      if (!input.files || input.files.length === 0) return false;
+      
+      const archivo = input.files[0];
+      const extensionesPermitidas = ["jpg", "jpeg", "png", "svg"];
+      const extension = archivo.name.split('.').pop().toLowerCase();
+      
+      return extensionesPermitidas.includes(extension);
+    }
+
     // Validaciones
     function soloTexto(valor) {
       return /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(valor.trim());
@@ -138,7 +207,7 @@
     function validarArchivo(input) {
       const archivo = input.files[0];
       if (!archivo) return false;
-      const extensionesPermitidas = ["jpg", "jpeg", "png"];
+      const extensionesPermitidas = ["jpg", "jpeg", "png","svg"];
       const extension = archivo.name.split(".").pop().toLowerCase();
       return extensionesPermitidas.includes(extension);
     }
@@ -163,6 +232,35 @@
       }
   
     }); 
+
+
+
+    // Geolocalización automática
+if ("geolocation" in navigator) {
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      document.getElementById("latitud").value = lat;
+      document.getElementById("longitud").value = lon;
+
+      document.getElementById("geo-msg").textContent =
+        "Ubicación detectada correctamente.";
+    },
+    function (error) {
+      document.getElementById("geo-msg").textContent =
+        "No se pudo obtener tu ubicación. Activa los permisos de geolocalización.";
+      console.error("Error de geolocalización:", error);
+    }
+  );
+} else {
+  document.getElementById("geo-msg").textContent =
+    "Tu navegador no admite geolocalización.";
+}
+
+
+
 
 
     document.getElementById('register-form').addEventListener('submit', async function (e) {
@@ -221,6 +319,67 @@
       }
 
     });
+
+
+    // Geolocalización
+    window.onload = function () {
+      const latInput = document.getElementById('latitud');
+      const lonInput = document.getElementById('longitud');
+      const geoMsg = document.getElementById('geo-msg');
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          latInput.value = position.coords.latitude;
+          lonInput.value = position.coords.longitude;
+          geoMsg.textContent = `Ubicación detectada correctamente.`;
+        }, function () {
+          geoMsg.textContent = "No se pudo obtener la ubicación. Asegúrese de permitir el acceso.";
+          geoMsg.style.color = "red";
+        });
+      } else {
+        geoMsg.textContent = "El navegador no soporta geolocalización.";
+        geoMsg.style.color = "red";
+      }
+    }
+
+
+
+  // Función para inicializar el mapa
+  function mostrarMapa(lat, lon) {
+    const mapa = L.map('map').setView([lat, lon], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(mapa);
+    L.marker([lat, lon]).addTo(mapa)
+      .bindPopup('Tu ubicación detectada')
+      .openPopup();
+  }
+
+  // Obtener ubicación y mostrar en el mapa
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        // Asignar valores a los inputs ocultos
+        document.getElementById("latitud").value = lat;
+        document.getElementById("longitud").value = lon;
+
+        // Mostrar mensaje
+        document.getElementById("geo-msg").innerText = "Ubicación detectada correctamente.";
+
+        // Mostrar mapa
+        mostrarMapa(lat, lon);
+      },
+      function(error) {
+        document.getElementById("geo-msg").innerText = "No se pudo obtener tu ubicación.";
+      }
+    );
+  } else {
+    document.getElementById("geo-msg").innerText = "Tu navegador no soporta geolocalización.";
+  }
+</script>
 
 
   </script>
