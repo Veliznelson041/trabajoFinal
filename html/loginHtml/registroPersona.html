@@ -6,6 +6,9 @@
   <title>Registro de Persona</title>
   <link rel="stylesheet" href="../../css/loginCss/register.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <!-- Leaflet CSS y JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
   <header>
@@ -109,12 +112,24 @@
 
       <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
 
+
+      <!-- Geolocalización automática -->
+      <input type="hidden" name="latitud" id="latitud">
+      <input type="hidden" name="longitud" id="longitud">
+      <p id="geo-msg" style="color: green; font-size: 0.9em;"></p>
+
+
       <p><a href="../../docs/RegistroPersona.pdf" download>Proceso de registro de persona (PDF)</a></p>
 
       <button type="submit">Registrarse</button>
       <p><a href="../loginHtml/login.html">Volver al inicio de sesión</a></p>
     </form>
   </div>
+
+  <!-- Mapa de ubicación -->
+<h3>Tu ubicación detectada</h3>
+<div id="map" style="height: 300px; width: 100%; margin-bottom: 20px;"></div>
+
 
   <footer>
     <p>
@@ -219,6 +234,35 @@
     }); 
 
 
+
+    // Geolocalización automática
+if ("geolocation" in navigator) {
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      document.getElementById("latitud").value = lat;
+      document.getElementById("longitud").value = lon;
+
+      document.getElementById("geo-msg").textContent =
+        "Ubicación detectada correctamente.";
+    },
+    function (error) {
+      document.getElementById("geo-msg").textContent =
+        "No se pudo obtener tu ubicación. Activa los permisos de geolocalización.";
+      console.error("Error de geolocalización:", error);
+    }
+  );
+} else {
+  document.getElementById("geo-msg").textContent =
+    "Tu navegador no admite geolocalización.";
+}
+
+
+
+
+
     document.getElementById('register-form').addEventListener('submit', async function (e) {
       e.preventDefault();
 
@@ -275,6 +319,67 @@
       }
 
     });
+
+
+    // Geolocalización
+    window.onload = function () {
+      const latInput = document.getElementById('latitud');
+      const lonInput = document.getElementById('longitud');
+      const geoMsg = document.getElementById('geo-msg');
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          latInput.value = position.coords.latitude;
+          lonInput.value = position.coords.longitude;
+          geoMsg.textContent = `Ubicación detectada correctamente.`;
+        }, function () {
+          geoMsg.textContent = "No se pudo obtener la ubicación. Asegúrese de permitir el acceso.";
+          geoMsg.style.color = "red";
+        });
+      } else {
+        geoMsg.textContent = "El navegador no soporta geolocalización.";
+        geoMsg.style.color = "red";
+      }
+    }
+
+
+
+  // Función para inicializar el mapa
+  function mostrarMapa(lat, lon) {
+    const mapa = L.map('map').setView([lat, lon], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(mapa);
+    L.marker([lat, lon]).addTo(mapa)
+      .bindPopup('Tu ubicación detectada')
+      .openPopup();
+  }
+
+  // Obtener ubicación y mostrar en el mapa
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        // Asignar valores a los inputs ocultos
+        document.getElementById("latitud").value = lat;
+        document.getElementById("longitud").value = lon;
+
+        // Mostrar mensaje
+        document.getElementById("geo-msg").innerText = "Ubicación detectada correctamente.";
+
+        // Mostrar mapa
+        mostrarMapa(lat, lon);
+      },
+      function(error) {
+        document.getElementById("geo-msg").innerText = "No se pudo obtener tu ubicación.";
+      }
+    );
+  } else {
+    document.getElementById("geo-msg").innerText = "Tu navegador no soporta geolocalización.";
+  }
+</script>
 
 
   </script>

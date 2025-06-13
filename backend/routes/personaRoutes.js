@@ -4,7 +4,7 @@ const personaController = require('../controllers/personaController');
 const multer = require('multer');
 const sharp = require('sharp');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs');https://github.com/Veliznelson041/trabajoFinal/pull/1/conflict?name=backend%252Froutes%252FpersonaRoutes.js&ancestor_oid=3229eebecd7c7b3755f333304fd562300859cf60&base_oid=b24ad3853664c64a932619ecf25d49902206db7c&head_oid=d3026f1f402bf07bed9d615ae991ac670a4184f6
 
 // Configuración de multer para subir imágenes
 const storage = multer.diskStorage({
@@ -57,6 +57,12 @@ const processImage = async (req, res, next) => {
 
       // Eliminar original y mantener el procesado
       fs.unlinkSync(inputPath); 
+
+        .webp({ quality: 80, reductionEffort: 6 }) // Ajustar calidad para ~450KB
+        .toFile(outputPath);
+
+      // Eliminar original y mantener el procesado
+      fs.unlinkSync(inputPath);
       req.file.filename = path.basename(outputPath);
     }
     
