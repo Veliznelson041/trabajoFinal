@@ -14,6 +14,30 @@ const deleteImageFile = (filename) => {
 
 exports.obtenerImagenPersona = async (req, res) => {
   try {
+
+    //  console.log(`Solicitando imagen para ID: ${req.params.id}`);
+    const [rows] = await db.execute('SELECT imagen FROM personas WHERE id = ?', [req.params.id]);
+    
+    if (!rows.length || !rows[0].imagen) {
+      //  console.log('No se encontró registro o imagen en la base de datos');
+      return res.status(404).send('Imagen no encontrada');
+    }
+
+    console.log(`Nombre de archivo en DB: ${rows[0].imagen}`);
+
+    const imagePath = path.join(__dirname, '../../uploads', rows[0].imagen);
+      console.log(`Ruta completa del archivo: ${imagePath}`);
+    
+    // Verifica si el archivo existe antes de enviarlo
+    if (!fs.existsSync(imagePath)) {
+      return res.status(404).send('Archivo de imagen no encontrado');
+    }
+    
+    console.log('Enviando archivo...');
+    res.sendFile(imagePath);
+  } catch (error) {
+    console.error('Error detallado:', error); // error real
+
     const [rows] = await db.execute('SELECT imagen FROM personas WHERE id = ?', [req.params.id]);
     
     if (!rows.length || !rows[0].imagen) {
