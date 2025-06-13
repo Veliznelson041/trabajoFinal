@@ -15,6 +15,15 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static("html"));
 
+// Agregar esta línea después de los middlewares
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.webp')) {
+      res.setHeader('Content-Type', 'image/webp');
+    }
+  }
+}));
+
 // Rutas
 app.use('/personas', personaRoutes);
 // Si querés habilitar también la ruta de usuario, dejá esta línea:

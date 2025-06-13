@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Persona</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+
+    #map {
+      height: 300px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Registro de Persona</h1>
+
+  <form action="/personas" method="POST" enctype="multipart/form-data">
+    <label for="nombre">Apellido y Nombre:</label>
+    <input type="text" name="nombre" id="nombre" required>
+
+    <label for="documento">Documento:</label>
+    <input type="text" name="documento" id="documento" required>
+
+    <label for="edad">Edad:</label>
+    <input type="number" name="edad" id="edad" required>
+
+    <label for="medico">Médico:</label>
+    <input type="text" name="medico" id="medico" required>
+
+    <label for="obra_social">Obra Social:</label>
+    <input type="text" name="obra_social" id="obra_social" required>
+
+    <label for="contador">Contador:</label>
+    <input type="text" name="contador" id="contador" required>
+
+    <label for="validar">Validar:</label>
+    <select name="validar" id="validar" required>
+      <option value="Sí">Sí</option>
+      <option value="No">No</option>
+    </select>
+
+    <label for="fecha_recepcion">Fecha de Recepción de Materiales:</label>
+    <input type="date" name="fecha_recepcion" id="fecha_recepcion" required>
+
+    <label for="fecha_entrega">Fecha de Entrega de Informe:</label>
+    <input type="date" name="fecha_entrega" id="fecha_entrega" required>
+
+    <label for="numero_informe">Número de Informe:</label>
+    <input type="text" name="numero_informe" id="numero_informe" required>
+
+    <label for="provincia">Provincia:</label>
+    <input type="text" name="provincia" id="provincia" required>
+
+    <label for="departamento">Departamento:</label>
+    <input type="text" name="departamento" id="departamento" required>
+
+    <label for="localidad">Localidad:</label>
+    <input type="text" name="localidad" id="localidad" required>
+
+    <label for="calle">Calle:</label>
+    <input type="text" name="calle" id="calle" required>
+
+    <label for="genero">Género:</label>
+    <select name="genero" id="genero" required>
+      <option value="Masculino">Masculino</option>
+      <option value="Femenino">Femenino</option>
+      <option value="Otro">Otro</option>
+    </select>
+
+    <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+    <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" required>
+
+    <label for="imagen">Imagen de Perfil:</label>
+    <input type="file" name="imagen" id="imagen" accept="image/*">
+
+    <label for="latitud">Latitud:</label>
+    <input type="text" name="latitud" id="latitud" readonly required>
+
+    <label for="longitud">Longitud:</label>
+    <input type="text" name="longitud" id="longitud" readonly required>
+
+    <button type="button" onclick="obtenerUbicacion()">Obtener Ubicación</button>
+
+    <div id="map"></div>
+
+    <button type="submit">Registrar</button>
+  </form>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <script>
+    let mapa;
+    let marcador;
+
+    function mostrarMapa(lat, lon) {
+      if (!mapa) {
+        mapa = L.map('map').setView([lat, lon], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(mapa);
+        marcador = L.marker([lat, lon]).addTo(mapa)
+          .bindPopup('Ubicación actual').openPopup();
+      } else {
+        mapa.setView([lat, lon], 15);
+        marcador.setLatLng([lat, lon]);
+      }
+    }
+
+    function obtenerUbicacion() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+
+          document.getElementById('latitud').value = lat;
+          document.getElementById('longitud').value = lon;
+
+          mostrarMapa(lat, lon);
+        }, err => {
+          alert('No se pudo obtener la ubicación: ' + err.message);
+        });
+      } else {
+        alert("Tu navegador no soporta geolocalización.");
+      }
+    }
+
+    // Cargar ubicación al abrir la página automáticamente
+    window.onload = obtenerUbicacion;
+  </script>
+
+</body>
+</html>
