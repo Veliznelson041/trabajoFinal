@@ -14,8 +14,7 @@ const deleteImageFile = (filename) => {
 
 exports.obtenerImagenPersona = async (req, res) => {
   try {
-
-    //  console.log(`Solicitando imagen para ID: ${req.params.id}`);
+    //  console.log(Solicitando imagen para ID: ${req.params.id});
     const [rows] = await db.execute('SELECT imagen FROM personas WHERE id = ?', [req.params.id]);
     
     if (!rows.length || !rows[0].imagen) {
@@ -37,16 +36,6 @@ exports.obtenerImagenPersona = async (req, res) => {
     res.sendFile(imagePath);
   } catch (error) {
     console.error('Error detallado:', error); // error real
-
-    const [rows] = await db.execute('SELECT imagen FROM personas WHERE id = ?', [req.params.id]);
-    
-    if (!rows.length || !rows[0].imagen) {
-      return res.status(404).send('Imagen no encontrada');
-    }
-
-    const imagePath = path.join(__dirname, '../uploads', rows[0].imagen);
-    res.sendFile(imagePath);
-  } catch (error) {
     res.status(500).json({ error: 'Error al obtener imagen' });
   }
 };
