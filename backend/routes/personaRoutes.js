@@ -52,7 +52,7 @@ const processImage = async (req, res, next) => {
           fit: 'cover',
           withoutEnlargement: true
         })
-        .webp({ quality: 80, reductionEffort: 6 }) // Ajustar calidad para ~450KB
+        .webp({ quality: 80, reductionEffort: 6 }) // Ajustar calidad 
         .toFile(outputPath);
 
       // Eliminar original y mantener el procesado
