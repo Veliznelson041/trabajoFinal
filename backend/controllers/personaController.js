@@ -6,11 +6,20 @@ const fs = require('fs');
 const deleteImageFile = (filename) => {
   if (filename && filename !== 'default.jpg') {
     const filePath = path.join(__dirname, '../uploads', filename);
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+      if (!err) {
+        fs.unlink(filePath, (unlinkErr) => {
+          if (unlinkErr) {
+            console.error('Error al eliminar la imagen:', unlinkErr.message);
+          } else {
+            console.log('Imagen eliminada correctamente.');
+          }
+        });
+      }
+    });
   }
 };
+
 
 exports.obtenerImagenPersona = async (req, res) => {
   try {

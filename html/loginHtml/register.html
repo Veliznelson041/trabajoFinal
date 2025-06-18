@@ -1,15 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-AR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro de Usuario</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../../css/loginCss/register.css" />
+    <style>
+      /* Agregué estilos adicionales para mejorar la experiencia de usuario */
+      .error-field {
+        border-color: #e74c3c !important;
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+      }
+      
+      .success-field {
+        border-color: #2ecc71 !important;
+      }
+      
+      .password-container {
+        position: relative;
+      }
+      
+      .password-container i {
+        position: absolute;
+        right: 15px;
+        top: 38px;
+        cursor: pointer;
+        color: #6c757d;
+      }
+      
+      .validation-info {
+        background: #f0f8ff;
+        border-left: 4px solid #00b7c2;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+    </style>
   </head>
   <body>
     <!-- Encabezado -->
@@ -48,55 +77,78 @@
       <a href="../loginHtml/register.html">Registrarse</a>
     </nav>
 
-    <div class="container">
-      <h1>Registro de Usuario</h1>
-      <form id="register-form">
+    <!-- FORMULARIO DE REGISTRO -->
+  <div class="container">
+    <h2>Registro de Usuario</h2>
+    <form id="register-form" novalidate>
+      <!-- Usuario -->
+      <label for="reg-usuario">Nombre de usuario:</label>
+      <input type="text" id="reg-usuario" required />
+      <small class="error" id="error-usuario"></small>
+      <small>No se permiten caracteres especiales ni símbolos.</small>
 
-        <label for="usuario">Nombre de usuario:</label>
-        <input type="text" id="usuario" name="usuario" required />
-        <small id="help-nombres">No se permiten caracteres especiales ni símbolos.</small>
+      <!-- Contraseña -->
+      <div class="password-container">
+        <label for="reg-contraseña">Contraseña:</label>
+        <input type="password" id="reg-contraseña" required />
+        <i class="fas fa-eye" id="togglePassword"></i>
+        <small class="error" id="error-clave"></small>
+      </div>
+      <small>Debe contener al menos 6 caracteres, 1 mayúscula, 1 minúscula, 1 número y un caracter especial.</small>
 
-        <label for="clave">Clave:</label>
-        <input type="password" id="clave" name="clave" required />
-        <small id="help-nombres">Debe contener como minímo, 1 letra mayuscula, 1 minuscula, 1 número y un caracter especial.</small>
+      <!-- Repetir contraseña -->
+      <div class="password-container">
+        <label for="reg-repetir">Repetir contraseña:</label>
+        <input type="password" id="reg-repetir" required />
+        <i class="fas fa-eye" id="togglePasswordRepeat"></i>
+        <small class="error" id="error-repetir"></small>
+      </div>
 
-        <!--
-        <label for="tipo-usuario">Tipo de usuario</label>
-        <select id="tipo-usuario">
-          <option value="usuario">Usuario</option>
-          <option value="admin">Administrador</option>
-        </select>
+      <!-- Email -->
+      <label for="reg-email">Email:</label>
+      <input type="email" id="reg-email" required />
+      <small class="error" id="error-email"></small>
 
-        -->
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-        <small id="help-nombres">No debe contener caracteres especiales.</small>
+      <!-- Imagen -->
+      <label for="imagen">Imagen de perfil:</label>
+      <input type="file" id="imagen" name="imagen" required />
+      <!-- Vista previa de la imagen -->
+      <div id="image-preview-container" style="display: none; margin-top: 10px;">
+        <img id="image-preview" src="" alt="Vista previa" style="max-width: 250px; max-height: 250px;">
+        <button type="button" id="remove-image" style="display: block; margin-top: 5px;">
+          Eliminar imagen
+        </button>
+      </div>
+      <small class="error" id="error-imagen"></small>
+      <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
+      
+      <!-- Panel de información de validación -->
+      <div class="validation-info">
+        <h3>Requisitos de contraseña:</h3>
+        <ul>
+          <li>Al menos 6 caracteres</li>
+          <li>1 letra mayúscula</li>
+          <li>1 letra minúscula</li>
+          <li>1 número</li>
+          <li>1 carácter especial (ej: !@#$%^&*)</li>
+        </ul>
+      </div>
+      
+      <!-- reCAPTCHA -->
+      <div class="g-recaptcha" data-sitekey="6LeYuFQrAAAAAHakqw9SEOV0LS4FQIEp8ZnPA7Wn"></div>
+      <small class="error" id="error-recaptcha"></small>  
 
-        <label for="imagen">Imagen de perfil:</label>
-        <input type="file" id="imagen" name="imagen" required />
-        <!-- se mostrará una vista previa de la imagen seleccionada -->
-        <div id="image-preview-container" style="display: none; margin-top: 10px;">
-          <img id="image-preview" src="" alt="Vista previa" style="max-width: 250px; max-height: 250px;">
-          <button type="button" id="remove-image" style="display: block; margin-top: 5px;">
-            Eliminar imagen
-          </button>
-        </div>
-        <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
-        
+      <!-- PDF y botón -->
+      <p>
+        <a href="../../docs/RegistroUsuario.pdf" download> Proceso de registro de usuario (PDF)</a>
+      </p>
 
-
-        <p>
-  <a href="../../docs/RegistroUsuario.pdf" download>
-    Proceso de registro de usuario (PDF)
-  </a>
-</p>
-
-
-        <button type="submit">Registrarse</button>
-        <p><a href="../loginHtml/login.html">Volver al inicio de sesión</a></p>
-      </form>
+      <button type="submit"><i class="fas fa-user-plus"></i> Registrarse</button>
+      <p><a href="../loginHtml/login.html">Volver al inicio de sesión</a></p>
+    </form>
     </div>
 
+    <!-- PIE DE PÁGINA -->
     <footer>
       <p>
         Dirección: Av. Pres. Arturo Illia 902, Catamarca, Argentina | Email:
@@ -114,6 +166,7 @@
     </footer>
 
     <script>
+      // Reloj en vivo
       const dateTimeElement = document.getElementById("date-time");
       const updateDateTime = () => {
         const now = new Date();
@@ -122,135 +175,267 @@
       setInterval(updateDateTime, 1000);
       updateDateTime();
 
-            // Vista previa de imagen
-     const imagenInput = document.getElementById('imagen');
-     const previewContainer = document.getElementById('image-preview-container');
-     const imagePreview = document.getElementById('image-preview');
-     const removeButton = document.getElementById('remove-image');
+      // Vista previa de imagen
+      const imagenInput = document.getElementById('imagen');
+      const previewContainer = document.getElementById('image-preview-container');
+      const imagePreview = document.getElementById('image-preview');
+      const removeButton = document.getElementById('remove-image');
 
-    imagenInput.addEventListener('change', function() {
-    if (this.files && this.files[0]) {
-      const file = this.files[0];
-      const reader = new FileReader();
-      
-      reader.onload = function(e) {
-        imagePreview.src = e.target.result;
-        previewContainer.style.display = 'block';
+      imagenInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+          const file = this.files[0];
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            previewContainer.style.display = 'block';
+          }
+          
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Eliminar imagen seleccionada
+      removeButton.addEventListener('click', function() {
+        imagenInput.value = '';
+        imagePreview.src = '';
+        previewContainer.style.display = 'none';
+      });
+
+      // Mostrar/ocultar contraseña
+      document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordField = document.getElementById('reg-contraseña');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+
+      document.getElementById('togglePasswordRepeat').addEventListener('click', function() {
+        const passwordField = document.getElementById('reg-repetir');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+
+      // Validaciones comunes
+      function textoYNumeros(valor) {
+        return /^[A-Za-z0-9\s]+$/.test(valor.trim());
       }
-      
-      reader.readAsDataURL(file);
-    }
-    });
 
-    // Eliminar imagen seleccionada
-    removeButton.addEventListener('click', function() {
-      imagenInput.value = '';
-      imagePreview.src = '';
-      previewContainer.style.display = 'none';
-    });
+      function tieneCaracteresEspeciales(valor) {
+        return /[^A-Za-z0-9\s]/.test(valor);
+      }
 
-    // Validar archivo (actualizado)
-    function validarArchivo(input) {
-      if (!input.files || input.files.length === 0) return false;
-      
-      const archivo = input.files[0];
-      const extensionesPermitidas = ["jpg", "jpeg", "png", "svg"];
-      const extension = archivo.name.split('.').pop().toLowerCase();
-      
-      return extensionesPermitidas.includes(extension);
-    }
+      function validarArchivo(input) {
+        const archivo = input.files[0];
+        if (!archivo) return false;
+        const extensionesPermitidas = ["jpg", "jpeg", "png"];
+        const extension = archivo.name.split(".").pop().toLowerCase();
+        return extensionesPermitidas.includes(extension);
+      }
 
+      // Función principal de validación del formulario
+      function validarFormularioUsuario(event) {
+        event.preventDefault();
 
+        // Obtener campos
+        const usuario = document.getElementById("reg-usuario").value.trim();
+        const clave = document.getElementById("reg-contraseña").value;
+        const repetirClave = document.getElementById("reg-repetir").value;
+        const email = document.getElementById("reg-email").value.trim();
+        const imagen = document.getElementById("imagen");
 
-  // Validaciones comunes
-  function soloTexto(valor) {
-    return /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(valor.trim());
-  }
+        // Mensajes de error
+        let errores = 0;
+        const errorUsuario = document.getElementById("error-usuario");
+        const errorClave = document.getElementById("error-clave");
+        const errorRepetir = document.getElementById("error-repetir");
+        const errorEmail = document.getElementById("error-email");
+        const errorImagen = document.getElementById("error-imagen");
+        const errorRecaptcha = document.getElementById("error-recaptcha");
 
-  function soloNumeros(valor) {
-    return /^\d+$/.test(valor);
-  }
+        // Limpiar errores previos
+        errorUsuario.textContent = "";
+        errorClave.textContent = "";
+        errorRepetir.textContent = "";
+        errorEmail.textContent = "";
+        errorImagen.textContent = "";
+        errorRecaptcha.textContent = "";
 
-  function textoYNumeros(valor) {
-    return /^[A-Za-z0-9\s]+$/.test(valor.trim());
-  }
+        // Resetear clases de error
+        document.getElementById("reg-usuario").classList.remove("error-field", "success-field");
+        document.getElementById("reg-contraseña").classList.remove("error-field", "success-field");
+        document.getElementById("reg-repetir").classList.remove("error-field", "success-field");
+        document.getElementById("reg-email").classList.remove("error-field", "success-field");
+        document.getElementById("imagen").classList.remove("error-field", "success-field");
 
-  function tieneCaracteresEspeciales(valor) {
-    return /[^A-Za-z0-9\s]/.test(valor);
-  }
+        // Validaciones
+        if (!textoYNumeros(usuario) || usuario.length < 3) {
+          errorUsuario.textContent = "Debe tener al menos 3 caracteres alfanuméricos.";
+          document.getElementById("reg-usuario").classList.add("error-field");
+          errores++;
+        } else if (tieneCaracteresEspeciales(usuario)) {
+          errorUsuario.textContent = "No se permiten caracteres especiales.";
+          document.getElementById("reg-usuario").classList.add("error-field");
+          errores++;
+        } else {
+          document.getElementById("reg-usuario").classList.add("success-field");
+        }
 
-  function validarArchivo(input) {
-    const archivo = input.files[0];
-    if (!archivo) return false;
-    const extensionesPermitidas = ["jpg", "jpeg", "png"];
-    const extension = archivo.name.split(".").pop().toLowerCase();
-    return extensionesPermitidas.includes(extension);
-  }
+        // Validación de contraseña
+        if (clave.length < 6) {
+          errorClave.textContent = "Debe tener al menos 6 caracteres.";
+          document.getElementById("reg-contraseña").classList.add("error-field");
+          errores++;
+        } else {
+          // Validar que tenga al menos una mayúscula, una minúscula, un número y un carácter especial
+          const regexClave = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+          if (!regexClave.test(clave)) {
+            errorClave.textContent = "Debe contener al menos 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial.";
+            document.getElementById("reg-contraseña").classList.add("error-field");
+            errores++;
+          } else {
+            document.getElementById("reg-contraseña").classList.add("success-field");
+          }
+        }
 
-  function validarFormularioPersona(event) {
-    event.preventDefault();
+        if (repetirClave !== clave) {
+          errorRepetir.textContent = "Las contraseñas no coinciden.";
+          document.getElementById("reg-repetir").classList.add("error-field");
+          errores++;
+        } else if (clave.length > 0) {
+          document.getElementById("reg-repetir").classList.add("success-field");
+        }
 
-    const nombres = document.getElementById("full-name").value;
-    const apellidos = document.querySelectorAll("#full-name")[1].value;
-    const dni = document.getElementById("dni").value;
-    const calle = document.getElementById("calle").value;
-    const imagen = document.getElementById("imagen");
+        if (!/\S+@\S+\.\S+/.test(email)) {
+          errorEmail.textContent = "Email inválido.";
+          document.getElementById("reg-email").classList.add("error-field");
+          errores++;
+        } else {
+          document.getElementById("reg-email").classList.add("success-field");
+        }
 
-    let errores = [];
+        // Validar archivo de imagen
+        if (!validarArchivo(imagen)) {
+          errorImagen.textContent = "Debe subir una imagen JPG, JPEG o PNG válida.";
+          document.getElementById("imagen").classList.add("error-field");
+          errores++;
+        } else {
+          document.getElementById("imagen").classList.add("success-field");
+        }
 
-    if (!soloTexto(nombres)) errores.push("El nombre debe contener solo letras.");
-    //if (!soloTexto(apellidos)) errores.push("El apellido debe contener solo letras.");
-    if (!soloNumeros(dni) || dni.length < 7 || dni.length > 8)
-      errores.push("El DNI debe tener solo números (7 u 8 dígitos).");
-    if (!textoYNumeros(calle)) errores.push("La calle debe contener solo letras y/o números.");
-    if (!validarArchivo(imagen)) errores.push("Debe subir una imagen JPG, JPEG o PNG válida.");
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (recaptchaResponse.length === 0) {
+          errorRecaptcha.textContent = "Por favor, verifica que eres humano.";
+          errores++;
+        }
 
-    if (errores.length > 0) {
-      alert(errores.join("\n"));
-    } else {
-      alert("Formulario válido. Enviando...");
-      // Aquí podrías enviar el formulario si estás conectado a backend
-      // e.target.submit();
-    }
-  }
+        // Si no hay errores, se permite registrar
+        if (errores === 0) {
+          Swal.fire({
+            icon: 'success',
+            title: '¡Registro exitoso!',
+            text: 'Tu cuenta ha sido creada correctamente.',
+            confirmButtonText: 'Aceptar',
+            customClass: {
+              popup: 'animated tada'
+            },
+            willClose: () => {
+              // Redirigir después de cerrar el alert
+              window.location.href = "../loginHtml/login.html";
+            }
+          });
+        } else {
+          // Mostrar alerta de error si hay problemas
+          Swal.fire({
+            icon: 'error',
+            title: 'Error en el formulario',
+            text: 'Por favor, corrige los errores marcados en rojo.',
+            confirmButtonText: 'Entendido'
+          });
+        }
+      }
 
-  function validarFormularioUsuario(event) {
-    event.preventDefault();
+      // Validación en tiempo real para campos
+      document.getElementById("reg-usuario").addEventListener("blur", function() {
+        const usuario = this.value.trim();
+        const errorUsuario = document.getElementById("error-usuario");
+        
+        if (!textoYNumeros(usuario) || usuario.length < 3) {
+          errorUsuario.textContent = "Debe tener al menos 3 caracteres alfanuméricos.";
+          this.classList.add("error-field");
+          this.classList.remove("success-field");
+        } else if (tieneCaracteresEspeciales(usuario)) {
+          errorUsuario.textContent = "No se permiten caracteres especiales.";
+          this.classList.add("error-field");
+          this.classList.remove("success-field");
+        } else {
+          errorUsuario.textContent = "";
+          this.classList.remove("error-field");
+          this.classList.add("success-field");
+        }
+      });
 
-    const usuario = document.getElementById("usuario").value;
-    const clave = document.getElementById("clave").value;
-    const email = document.getElementById("email").value;
-    const imagen = document.getElementById("imagen");
+      document.getElementById("reg-contraseña").addEventListener("blur", function() {
+        const clave = this.value;
+        const errorClave = document.getElementById("error-clave");
+        
+        if (clave.length < 6) {
+          errorClave.textContent = "Debe tener al menos 6 caracteres.";
+          this.classList.add("error-field");
+          this.classList.remove("success-field");
+        } else {
+          const regexClave = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
+          if (!regexClave.test(clave)) {
+            errorClave.textContent = "Debe contener 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial.";
+            this.classList.add("error-field");
+            this.classList.remove("success-field");
+          } else {
+            errorClave.textContent = "";
+            this.classList.remove("error-field");
+            this.classList.add("success-field");
+          }
+        }
+      });
 
-    let errores = [];
+      document.getElementById("reg-repetir").addEventListener("blur", function() {
+        const clave = document.getElementById("reg-contraseña").value;
+        const repetirClave = this.value;
+        const errorRepetir = document.getElementById("error-repetir");
+        
+        if (repetirClave !== clave) {
+          errorRepetir.textContent = "Las contraseñas no coinciden.";
+          this.classList.add("error-field");
+          this.classList.remove("success-field");
+        } else {
+          errorRepetir.textContent = "";
+          this.classList.remove("error-field");
+          this.classList.add("success-field");
+        }
+      });
 
-    if (!textoYNumeros(usuario)|| nombres.trim().length < 3) errores.push("El nombre de usuario debe contener solo letras, y tiene que ser igual o mayor a 3 caracteres.");
-    if (tieneCaracteresEspeciales(usuario)) errores.push("El nombre de usuario no debe tener caracteres especiales.");
-    if (clave.length < 6) errores.push("La clave debe tener al menos 6 caracteres.");
-    if (!/\S+@\S+\.\S+/.test(email)) errores.push("Email inválido.");
-    if (!validarArchivo(imagen)) errores.push("Debe subir una imagen JPG, JPEG o PNG válida.");
+      document.getElementById("reg-email").addEventListener("blur", function() {
+        const email = this.value.trim();
+        const errorEmail = document.getElementById("error-email");
+        
+        if (!/\S+@\S+\.\S+/.test(email)) {
+          errorEmail.textContent = "Email inválido.";
+          this.classList.add("error-field");
+          this.classList.remove("success-field");
+        } else {
+          errorEmail.textContent = "";
+          this.classList.remove("error-field");
+          this.classList.add("success-field");
+        }
+      });
 
-    if (errores.length > 0) {
-      alert(errores.join("\n"));
-    } else {
-      alert("Formulario válido. Enviando...");
-      // e.target.submit();
-    }
-  }
-
-  // Asociar eventos al cargar la página
-  document.addEventListener("DOMContentLoaded", () => {
-    const formPersona = document.querySelector("#register-form");
-    if (formPersona && document.title.includes("Persona")) {
-      formPersona.addEventListener("submit", validarFormularioPersona);
-    } else if (formPersona && document.title.includes("Usuario")) {
-      formPersona.addEventListener("submit", validarFormularioUsuario);
-    }
-  });
-
-
-
-
+      // Asociar evento de envío al formulario
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("#register-form");
+        form.addEventListener("submit", validarFormularioUsuario);
+      });
     </script>
   </body>
 </html>

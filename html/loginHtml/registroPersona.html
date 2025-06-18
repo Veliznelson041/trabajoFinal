@@ -9,6 +9,60 @@
   <!-- Leaflet CSS y JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    /* Estilos adicionales */
+    .error {
+      color: #e74c3c;
+      font-size: 0.9rem;
+      margin-top: 5px;
+      display: block;
+    }
+    .error-field {
+      border: 2px solid #e74c3c !important;
+    }
+    .success-field {
+      border: 2px solid #2ecc71 !important;
+    }
+    .map-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      max-width: 1000px;
+    }
+    #map {
+      height: 400px;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+    .map-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .map-controls button {
+      padding: 8px 15px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .map-controls button:hover {
+      background: #2980b9;
+    }
+    .coordinates {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -39,18 +93,22 @@
     <form id="register-form" novalidate>
       <label for="nombres">Nombres:</label>
       <input type="text" id="nombre" name="nombre" required aria-describedby="help-nombres"/>
+      <small class="error" id="error-nombre"></small>
       <small id="help-nombres">Solo letras. No se permiten números ni símbolos.</small>
 
       <label for="apellidos">Apellidos:</label>
       <input type="text" id="apellido" name="apellido" required aria-describedby="help-apellidos"/>
+      <small class="error" id="error-apellido"></small>
       <small id="help-apellidos">Solo letras. No se permiten números ni símbolos.</small>
 
       <label for="dni">DNI:</label>
       <input type="text" id="dni" name="dni" required maxlength="8" minlength="7" aria-describedby="help-dni"/>
+      <small class="error" id="error-dni"></small>
       <small id="help-dni">Debe contener entre 7 y 8 dígitos numéricos.</small>
 
       <label for="calle">Calle:</label>
       <input type="text" id="calle" name="calle" required aria-describedby="help-calle"/>
+      <small class="error" id="error-calle"></small>
       <small id="help-calle">Puede contener letras y números.</small>
       
       <label for="provincia">Seleccione una provincia:</label>
@@ -80,13 +138,16 @@
         <option value="Tierra del Fuego">Tierra del Fuego</option>
         <option value="Tucumán">Tucumán</option>
       </select>
+      <small class="error" id="error-provincia"></small>
 
       <label for="departamento">Departamento:</label>
       <input type="text" id="departamento" name="departamento" required aria-describedby="help-departamento"/>
+      <small class="error" id="error-departamento"></small>
       <small id="help-departamento">Puede contener letras y números.</small>
 
       <label for="localidad">Localidad:</label>
       <input type="text" id="localidad" name="localidad" required aria-describedby="help-localidad"/>
+      <small class="error" id="error-localidad"></small>
       <small id="help-localidad">Puede contener letras y números.</small>
     
       <label for="genero">Género:</label>
@@ -96,9 +157,11 @@
         <option value="femenino">Femenino</option>
         <option value="otro">Otro</option>
       </select>
+      <small class="error" id="error-genero"></small>
 
       <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
       <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required />
+      <small class="error" id="error-fecha"></small>
 
       <label for="imagen">Imagen de perfil:</label>
       <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" required aria-describedby="help-imagen"/>
@@ -109,15 +172,13 @@
             Eliminar imagen
            </button>
       </div>
-
+      <small class="error" id="error-imagen"></small>
       <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
-
 
       <!-- Geolocalización automática -->
       <input type="hidden" name="latitud" id="latitud">
       <input type="hidden" name="longitud" id="longitud">
       <p id="geo-msg" style="color: green; font-size: 0.9em;"></p>
-
 
       <p><a href="../../docs/RegistroPersona.pdf" download>Proceso de registro de persona (PDF)</a></p>
 
@@ -126,10 +187,21 @@
     </form>
   </div>
 
-  <!-- Mapa de ubicación -->
-<h3>Tu ubicación detectada</h3>
-<div id="map" style="height: 300px; width: 100%; margin-bottom: 20px;"></div>
-
+  <!-- Mapa de ubicación interactivo -->
+  <div class="map-container">
+    <h3>Tu ubicación</h3>
+    <p>Desplázate por el mapa y haz clic para marcar tu ubicación exacta</p>
+    <div id="map"></div>
+    <div class="coordinates">
+      <strong>Coordenadas actuales:</strong>
+      <span id="coords-display">Lat: 0.0000, Lon: 0.0000</span>
+    </div>
+    <div class="map-controls">
+      <button id="btn-center">Centrar en mi ubicación</button>
+      <button id="btn-marker">Marcar ubicación</button>
+      <button id="btn-reset">Restablecer ubicación</button>
+    </div>
+  </div>
 
   <footer>
     <p>
@@ -153,24 +225,31 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
-      // Vista previa de imagen
-     const imagenInput = document.getElementById('imagen');
-     const previewContainer = document.getElementById('image-preview-container');
-     const imagePreview = document.getElementById('image-preview');
-     const removeButton = document.getElementById('remove-image');
+    // Variables globales para el mapa
+    let map;
+    let userMarker;
+    let clickMarker;
+    let userLocation = { lat: -28.4696, lon: -65.7795 }; // Catamarca por defecto
+    let coordsDisplay = document.getElementById('coords-display');
+
+    // Vista previa de imagen
+    const imagenInput = document.getElementById('imagen');
+    const previewContainer = document.getElementById('image-preview-container');
+    const imagePreview = document.getElementById('image-preview');
+    const removeButton = document.getElementById('remove-image');
 
     imagenInput.addEventListener('change', function() {
-    if (this.files && this.files[0]) {
-      const file = this.files[0];
-      const reader = new FileReader();
-      
-      reader.onload = function(e) {
-        imagePreview.src = e.target.result;
-        previewContainer.style.display = 'block';
+      if (this.files && this.files[0]) {
+        const file = this.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+          previewContainer.style.display = 'block';
+        }
+        
+        reader.readAsDataURL(file);
       }
-      
-      reader.readAsDataURL(file);
-    }
     });
 
     // Eliminar imagen seleccionada
@@ -180,12 +259,12 @@
       previewContainer.style.display = 'none';
     });
 
-    // Validar archivo (actualizado)
+    // Validar archivo
     function validarArchivo(input) {
       if (!input.files || input.files.length === 0) return false;
       
       const archivo = input.files[0];
-      const extensionesPermitidas = ["jpg", "jpeg", "png", "svg"];
+      const extensionesPermitidas = ["jpg", "jpeg", "png"];
       const extension = archivo.name.split('.').pop().toLowerCase();
       
       return extensionesPermitidas.includes(extension);
@@ -204,184 +283,309 @@
       return /^[A-Za-z0-9\s]+$/.test(valor.trim());
     }
 
-    function validarArchivo(input) {
-      const archivo = input.files[0];
-      if (!archivo) return false;
-      const extensionesPermitidas = ["jpg", "jpeg", "png","svg"];
-      const extension = archivo.name.split(".").pop().toLowerCase();
-      return extensionesPermitidas.includes(extension);
+    // Función para inicializar el mapa
+    function initMap(lat, lon) {
+      if (map) map.remove();
+      
+      // Crear el mapa
+      map = L.map('map').setView([lat, lon], 15);
+      
+      // Añadir capa de tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+      
+      // Crear marcador de usuario
+      userMarker = L.marker([lat, lon]).addTo(map)
+        .bindPopup('Tu ubicación detectada')
+        .openPopup();
+      
+      // Evento para agregar marcadores al hacer clic
+      map.on('click', function(e) {
+        // Eliminar marcador anterior si existe
+        if (clickMarker) map.removeLayer(clickMarker);
+        
+        // Crear nuevo marcador
+        clickMarker = L.marker(e.latlng).addTo(map)
+          .bindPopup('Ubicación seleccionada')
+          .openPopup();
+        
+        // Actualizar coordenadas
+        updateCoordinates(e.latlng.lat, e.latlng.lng);
+      });
+      
+      // Actualizar coordenadas
+      updateCoordinates(lat, lon);
     }
+
+    // Actualizar coordenadas en la UI
+    function updateCoordinates(lat, lon) {
+      document.getElementById("latitud").value = lat;
+      document.getElementById("longitud").value = lon;
+      coordsDisplay.textContent = `Lat: ${lat.toFixed(6)}, Lon: ${lon.toFixed(6)}`;
+    }
+
+    // Centrar en la ubicación del usuario
+    function centerOnUser() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            map.setView([lat, lon], 15);
+            userLocation = { lat, lon };
+            
+            // Mover marcador de usuario
+            userMarker.setLatLng([lat, lon]);
+            updateCoordinates(lat, lon);
+            
+            document.getElementById("geo-msg").textContent = "Ubicación actualizada correctamente.";
+          },
+          function(error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error de geolocalización',
+              text: 'No se pudo obtener tu ubicación. Asegúrate de tener los permisos activados.'
+            });
+          }
+        );
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Tu navegador no soporta geolocalización.'
+        });
+      }
+    }
+
+    // Obtener ubicación y mostrar en el mapa
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          userLocation = { lat, lon };
+          
+          // Asignar valores a los inputs ocultos
+          document.getElementById("latitud").value = lat;
+          document.getElementById("longitud").value = lon;
+          
+          // Mostrar mensaje
+          document.getElementById("geo-msg").textContent = "Ubicación detectada correctamente.";
+          
+          // Mostrar mapa
+          initMap(lat, lon);
+        },
+        function(error) {
+          // Usar ubicación por defecto si falla
+          document.getElementById("geo-msg").textContent = "No se pudo obtener tu ubicación. Usando ubicación por defecto (Catamarca).";
+          initMap(userLocation.lat, userLocation.lon);
+        }
+      );
+    } else {
+      document.getElementById("geo-msg").textContent = "Tu navegador no soporta geolocalización. Usando ubicación por defecto.";
+      initMap(userLocation.lat, userLocation.lon);
+    }
+
+    // Eventos para los botones del mapa
+    document.getElementById('btn-center').addEventListener('click', centerOnUser);
     
+    document.getElementById('btn-marker').addEventListener('click', function() {
+      Swal.fire({
+        icon: 'info',
+        title: 'Marcar ubicación',
+        text: 'Haz clic en cualquier lugar del mapa para marcar tu ubicación exacta.'
+      });
+    });
+    
+    document.getElementById('btn-reset').addEventListener('click', function() {
+      if (clickMarker) {
+        map.removeLayer(clickMarker);
+        clickMarker = null;
+      }
+      updateCoordinates(userLocation.lat, userLocation.lon);
+      Swal.fire({
+        icon: 'success',
+        title: 'Ubicación restablecida',
+        text: 'Se ha restablecido a tu ubicación original.'
+      });
+    });
+
     // Validación de fecha de nacimiento
     document.getElementById("fecha_nacimiento").addEventListener("change", function() {
       const fecha = new Date(this.value);
       const hoy = new Date();
+      const errorFecha = document.getElementById("error-fecha");
+      errorFecha.textContent = "";
+      
       if (fecha >= hoy) {
-        alert("La fecha de nacimiento no puede ser futura.");
-        this.value = "";
+        errorFecha.textContent = "La fecha de nacimiento no puede ser futura.";
+        this.classList.add("error-field");
         return;
       }
+      
       // Verificar si es mayor de edad (18 años)
       const edad = hoy.getFullYear() - fecha.getFullYear();
       const m = hoy.getMonth() - fecha.getMonth();
       const d = hoy.getDate() - fecha.getDate();
       let esMayor = edad > 18 || (edad === 18 && (m > 0 || (m === 0 && d >= 0)));
+      
       if (!esMayor) {
-        alert("Debes ser mayor de 18 años para registrarte.");
-        this.value = "";
+        errorFecha.textContent = "Debes ser mayor de 18 años para registrarte.";
+        this.classList.add("error-field");
+      } else {
+        this.classList.remove("error-field");
+        this.classList.add("success-field");
       }
-  
-    }); 
+    });
 
+    // Validación en tiempo real
+    document.querySelectorAll('input, select').forEach(input => {
+      input.addEventListener('blur', function() {
+        const errorId = `error-${this.id}`;
+        const errorElement = document.getElementById(errorId);
+        if (!errorElement) return;
+        
+        errorElement.textContent = "";
+        this.classList.remove("error-field", "success-field");
+        
+        // Validaciones específicas
+        if (this.id === 'nombre' || this.id === 'apellido') {
+          if (!soloTexto(this.value) || this.value.trim().length < 3) {
+            errorElement.textContent = this.id === 'nombre' ? 
+              "El nombre debe contener solo letras y al menos 3 caracteres." : 
+              "El apellido debe contener solo letras y al menos 3 caracteres.";
+            this.classList.add("error-field");
+          } else {
+            this.classList.add("success-field");
+          }
+        }
+        
+        if (this.id === 'dni') {
+          if (!soloNumeros(this.value) || this.value.length < 7 || this.value.length > 8) {
+            errorElement.textContent = "El DNI debe tener entre 7 y 8 dígitos numéricos.";
+            this.classList.add("error-field");
+          } else {
+            this.classList.add("success-field");
+          }
+        }
+        
+        if (this.id === 'calle') {
+          if (!textoYNumeros(this.value)) {
+            errorElement.textContent = "La calle debe contener solo letras y/o números.";
+            this.classList.add("error-field");
+          } else {
+            this.classList.add("success-field");
+          }
+        }
+        
+        if (this.id === 'provincia' || this.id === 'genero') {
+          if (!this.value) {
+            errorElement.textContent = "Este campo es obligatorio.";
+            this.classList.add("error-field");
+          } else {
+            this.classList.add("success-field");
+          }
+        }
+      });
+    });
 
-
-    // Geolocalización automática
-if ("geolocation" in navigator) {
-  navigator.geolocation.getCurrentPosition(
-    function (position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-
-      document.getElementById("latitud").value = lat;
-      document.getElementById("longitud").value = lon;
-
-      document.getElementById("geo-msg").textContent =
-        "Ubicación detectada correctamente.";
-    },
-    function (error) {
-      document.getElementById("geo-msg").textContent =
-        "No se pudo obtener tu ubicación. Activa los permisos de geolocalización.";
-      console.error("Error de geolocalización:", error);
-    }
-  );
-} else {
-  document.getElementById("geo-msg").textContent =
-    "Tu navegador no admite geolocalización.";
-}
-
-
-
-
-
-    document.getElementById('register-form').addEventListener('submit', async function (e) {
+    // Envío del formulario con SweetAlert2
+    document.getElementById('register-form').addEventListener('submit', async function(e) {
       e.preventDefault();
 
-      const nombres = document.getElementById("nombre").value;
-      const apellidos = document.getElementById("apellido").value;
-      const dni = document.getElementById("dni").value;
-      const calle = document.getElementById("calle").value;
-      const imagen = document.getElementById("imagen");
+      // Validar todos los campos
+      let valid = true;
+      const campos = [
+        'nombre', 'apellido', 'dni', 'calle', 'provincia', 
+        'departamento', 'localidad', 'genero', 'fecha_nacimiento', 'imagen'
+      ];
+      
+      campos.forEach(campo => {
+        const element = document.getElementById(campo);
+        const errorElement = document.getElementById(`error-${campo}`);
+        
+        if (!errorElement) return;
+        
+        errorElement.textContent = "";
+        element.classList.remove("error-field");
+        
+        // Validación básica de campo requerido
+        if (!element.value) {
+          errorElement.textContent = "Este campo es obligatorio.";
+          element.classList.add("error-field");
+          valid = false;
+        }
+      });
 
-      let errores = [];
+      // Validación adicional para imagen
+      const imagen = document.getElementById('imagen');
+      if (!validarArchivo(imagen)) {
+        document.getElementById('error-imagen').textContent = "Debe subir una imagen JPG, JPEG o PNG válida.";
+        imagen.classList.add("error-field");
+        valid = false;
+      }
 
-      if (!soloTexto(nombres)) errores.push("El nombre debe contener solo letras .");
-      if (nombres.trim().length < 3) errores.push("El nombre debe contener 3 letras o más.");
-      if (!soloTexto(apellidos)) errores.push("El apellido debe contener solo letras.");
-      if (apellidos.trim().length < 3) errores.push("El apellido debe contener 3 letras o más.");
+      // Si hay errores, mostrar alerta
+      if (!valid) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Formulario incompleto',
+          text: 'Por favor, complete todos los campos correctamente.',
+          confirmButtonText: 'Entendido'
+        });
+        return;
+      }
 
-      if (!soloNumeros(dni) || dni.length < 7 || dni.length > 8)
-        errores.push("El DNI debe tener entre 7 y 8 dígitos numéricos.");
-      if (!textoYNumeros(calle)) errores.push("La calle debe contener solo letras y/o números.");
-      if (!validarArchivo(imagen)) errores.push("Debe subir una imagen JPG, JPEG o PNG válida.");
-
-      if (errores.length > 0) {
-        alert(errores.join("\n"));
-      } else {
-        alert("Formulario válido. Enviando...");
-        // Aquí podés enviar al backend si tenés configurado
-        // this.submit(); // o enviar con fetch si es SPA
-        // window.location.href = "register.html";
-
-        const formulario = document.getElementById('register-form');
-        const formData = new FormData(formulario);
-        try {
-          const resp = await fetch('http://localhost:3000/personas', {
-            method: 'POST',
-            body: formData
+      // Enviar formulario
+      const formData = new FormData(this);
+      
+      try {
+        const resp = await fetch('http://localhost:3000/personas', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const resultado = await resp.json();
+        
+        if (resp.ok) {
+          Swal.fire({
+            icon: 'success',
+            title: '¡Registro exitoso!',
+            text: 'Tu cuenta ha sido creada correctamente.',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            window.location.href = "/html/loginHtml/login.html";
           });
-          const resultado = await resp.json();
-          if (resp.ok) {
-            alert("Registro exitoso");
-            window.location.href ="/html/loginHtml/register.html";
-          } else {
-          // manejar error dni duplicado
+        } else {
+          // Manejar error dni duplicado
           if (resp.status === 409 && resultado.campo === 'dni') {
-            alert('Error: ' + resultado.error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: resultado.error,
+              confirmButtonText: 'Entendido'
+            });
             document.getElementById("dni").focus();
             document.getElementById("dni").select();
             return;
           }
-            alert("Error al registrar la persona: " + resultado.error);
-          }
-        } catch (error) {
-          console.error("Error:", error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al registrar',
+            text: resultado.error || 'Error desconocido',
+            confirmButtonText: 'Entendido'
+          });
         }
-      }
-
-    });
-
-
-    // Geolocalización
-    window.onload = function () {
-      const latInput = document.getElementById('latitud');
-      const lonInput = document.getElementById('longitud');
-      const geoMsg = document.getElementById('geo-msg');
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          latInput.value = position.coords.latitude;
-          lonInput.value = position.coords.longitude;
-          geoMsg.textContent = `Ubicación detectada correctamente.`;
-        }, function () {
-          geoMsg.textContent = "No se pudo obtener la ubicación. Asegúrese de permitir el acceso.";
-          geoMsg.style.color = "red";
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de conexión',
+          text: 'No se pudo conectar con el servidor. Intente nuevamente.',
+          confirmButtonText: 'Entendido'
         });
-      } else {
-        geoMsg.textContent = "El navegador no soporta geolocalización.";
-        geoMsg.style.color = "red";
       }
-    }
-
-
-
-  // Función para inicializar el mapa
-  function mostrarMapa(lat, lon) {
-    const mapa = L.map('map').setView([lat, lon], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(mapa);
-    L.marker([lat, lon]).addTo(mapa)
-      .bindPopup('Tu ubicación detectada')
-      .openPopup();
-  }
-
-  // Obtener ubicación y mostrar en el mapa
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      function(position) {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-
-        // Asignar valores a los inputs ocultos
-        document.getElementById("latitud").value = lat;
-        document.getElementById("longitud").value = lon;
-
-        // Mostrar mensaje
-        document.getElementById("geo-msg").innerText = "Ubicación detectada correctamente.";
-
-        // Mostrar mapa
-        mostrarMapa(lat, lon);
-      },
-      function(error) {
-        document.getElementById("geo-msg").innerText = "No se pudo obtener tu ubicación.";
-      }
-    );
-  } else {
-    document.getElementById("geo-msg").innerText = "Tu navegador no soporta geolocalización.";
-  }
-</script>
-
-
+    });
   </script>
 </body>
 </html>

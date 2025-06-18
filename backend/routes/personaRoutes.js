@@ -37,7 +37,7 @@ const upload = multer({
 // Middleware para procesar imágenes
 const processImage = async (req, res, next) => {
   if (!req.file) return next();
-  
+
   try {
     const inputPath = req.file.path;
     const outputPath = path.join(
@@ -45,26 +45,35 @@ const processImage = async (req, res, next) => {
       path.basename(inputPath, path.extname(inputPath)) + '.webp'
     );
 
-    // Procesar imagen solo si no es SVG
+    // Solo procesar si no es SVG
     if (path.extname(inputPath).toLowerCase() !== '.svg') {
       await sharp(inputPath)
         .resize(250, 250, {
           fit: 'cover',
           withoutEnlargement: true
         })
-        .webp({ quality: 80, reductionEffort: 6 }) // Ajustar calidad 
+        .webp({ quality: 80, reductionEffort: 6 })
         .toFile(outputPath);
 
-      // Eliminar original y mantener el procesado
-      fs.unlinkSync(inputPath); 
+      // Intentar eliminar el archivo original de forma segura
+      fs.unlink(inputPath, (err) => {
+        if (err) {
+          console.error('⚠️ No se pudo eliminar el archivo original:', err.message);
+        } else {
+          console.log('🗑️ Archivo original eliminado correctamente:', inputPath);
+        }
+      });
+
       req.file.filename = path.basename(outputPath);
     }
-    
+
     next();
   } catch (error) {
+    console.error('❌ Error procesando imagen:', error.message);
     next(error);
   }
 };
+
 
 
 // Rutas CRUD para personas
