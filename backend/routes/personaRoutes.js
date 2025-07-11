@@ -5,6 +5,7 @@ const multer = require('multer');
 const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 
 // Configuración de multer para subir imágenes
 const storage = multer.diskStorage({
@@ -74,12 +75,28 @@ const processImage = async (req, res, next) => {
   }
 };
 
+const guardarImagenBase64 = async (req, res, next) => {
+  if (!req.body?.imagenBase64) return next();
+
+  try {
+    const base64 = req.body.imagenBase64.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(base64, 'base64');
+    const filename = `cam_${uuidv4()}.jpg`;
+    await fs.promises.writeFile(path.join(__dirname, '../../uploads', filename), buffer);
+    req.body.imagenCamara = filename;   // lo usará el controller
+    next();
+  } catch (err) {
+    console.error('Error al guardar imagen cámara:', err);
+    return res.status(500).json({ error: 'No se pudo guardar la foto' });
+  }
+};
+
 
 
 // Rutas CRUD para personas
 router.get('/:id/imagen', personaController.obtenerImagenPersona);
 router.get('/', personaController.obtenerPersonas);
-router.post('/', upload.single('imagen'), processImage, personaController.registrarPersona);
+router.post('/', upload.single('imagen'), guardarImagenBase64, processImage, personaController.registrarPersona);
 router.put('/:id', personaController.editarPersona);
 router.delete('/:id', personaController.eliminarPersona);
 

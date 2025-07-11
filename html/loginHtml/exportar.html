@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exportar Datos</title>
+  <link rel="stylesheet" href="/css/loginCss/register.css" />
+  <style>
+    .contenedor-exportar {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 40px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--color-principal);
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-left: 8px;
+    }
+
+    .botones-formato {
+      text-align: center;
+    }
+
+    .btn-exportar {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: var(--color-principal);
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-exportar:hover {
+      background-color: var(--color-hover);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-container">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt_eZYMvS26mdHNwVQw-zHWqDRdSz5XzAVHQ&s"
+        alt="Logo de Suplementos Dynamite" class="logo" />
+      <h1 id="title">Suplementos Dynamite</h1>
+    </div>
+  </header>
+
+  <div class="contenedor-exportar">
+    <h2>Seleccioná los campos a exportar</h2>
+
+    <form id="formExportar" method="GET">
+      <div class="form-group">
+        <input type="checkbox" name="campos" value="nombre" checked /> <label>Nombre</label><br />
+        <input type="checkbox" name="campos" value="apellido" checked /> <label>Apellido</label><br />
+        <input type="checkbox" name="campos" value="dni" checked /> <label>DNI</label><br />
+        <input type="checkbox" name="campos" value="email" /> <label>Email</label><br />
+        <input type="checkbox" name="campos" value="usuario" /> <label>Usuario</label><br />
+      </div>
+
+      <h2>Formato de exportación</h2>
+
+      <div class="botones-formato">
+        <button type="button" class="btn-exportar" onclick="exportar('pdf')">📄 Exportar PDF</button>
+        <button type="button" class="btn-exportar" onclick="exportar('xlsx')">📊 Exportar Excel</button>
+        <button type="button" class="btn-exportar" onclick="exportar('csv')">📁 Exportar CSV</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Capturar el ID de la persona desde la URL y guardarlo en localStorage
+    const params = new URLSearchParams(window.location.search);
+    const personaId = params.get("id");
+    if (personaId) {
+      localStorage.setItem("persona_id", personaId);
+    }
+
+    function exportar(formato) {
+      const id = localStorage.getItem("persona_id");
+      const form = document.getElementById("formExportar");
+      const camposSeleccionados = [...form.querySelectorAll('input[name="campos"]:checked')]
+        .map(checkbox => checkbox.value);
+
+      if (!id) {
+        alert("No se encontró el ID de la persona.");
+        return;
+      }
+
+      if (camposSeleccionados.length === 0) {
+        alert("Seleccioná al menos un campo para exportar.");
+        return;
+      }
+
+      const query = new URLSearchParams();
+      query.append("id", id);
+      query.append("campos", camposSeleccionados.join(","));
+
+      window.location.href = `/exportar/${formato}?${query.toString()}`;
+    }
+  </script>
+
+</body>
+
+</html>

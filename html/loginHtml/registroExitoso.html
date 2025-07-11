@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro Exitoso</title>
+    <link rel="stylesheet" href="/css/loginCss/register.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .mensaje-exito {
+            max-width: 600px;
+            margin: 100px auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .mensaje-exito h1 {
+            color: var(--color-principal);
+            margin-bottom: 20px;
+        }
+
+        .mensaje-exito .btn {
+            display: inline-block;
+            background-color: var(--color-principal);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .mensaje-exito .btn:hover {
+            background-color: var(--color-hover);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt_eZYMvS26mdHNwVQw-zHWqDRdSz5XzAVHQ&s"
+                alt="Logo de Suplementos Dynamite" class="logo" />
+            <h1 id="title">Suplementos Dynamite</h1>
+        </div>
+        <p id="date-time"></p>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="/html/catalogo-Carrito-Producto-HTML/catalogo.html">Catálogo</a></li>
+                <li><a href="../contactoHtml/contacto.html">Contacto</a></li>
+                <li><a href="/html/loginHtml/login.html" class="btn-login"><i class="fas fa-user"></i> Iniciar
+                        Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <nav class="ruta">
+        <a href="../index.html">Inicio</a> &gt;
+        <a href="login.html">Iniciar Sesión</a> &gt;
+        <a href="../loginHtml/register.html">Registrarse</a>
+    </nav>
+
+    <div class="mensaje-exito">
+        <h1>✅ Registro de persona hecho exitosamente</h1>
+
+        <a href="../loginHtml/register.html" class="btn">Continuar con el registro</a>
+        <a href="#" class="btn" id="btn-exportar">Exportar</a>
+
+    </div>
+
+
+    <footer>
+        <p>
+            Dirección: Av. Pres. Arturo Illia 902, Catamarca, Argentina | Email:
+            contacto@suplementosdynamite.com | Tel: (123) 456-7890
+        </p>
+        <div class="social-icons">
+            <a href="https://wa.me/1234567890" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/suplementosdynamite" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p>&copy; 2024 Suplementos Dynamite. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const dt = document.getElementById("date-time");
+        const now = new Date();
+        dt.innerText = now.toLocaleDateString() + " - " + now.toLocaleTimeString();
+
+        document.getElementById("btn-exportar").addEventListener("click", function (e) {
+            e.preventDefault();
+            const personaId = localStorage.getItem("persona_id");
+            if (personaId) {
+                window.location.href = `/html/loginHtml/exportar.html?id=${personaId}`;
+            } else {
+                alert("No se encontró el ID de persona. Volvé a registrarte.");
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

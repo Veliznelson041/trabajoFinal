@@ -1,172 +1,101 @@
+
 <!DOCTYPE html>
 <html lang="es-AR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registro de Usuario</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="../../css/loginCss/register.css" />
-    <style>
-      /* Agregué estilos adicionales para mejorar la experiencia de usuario */
-      .error-field {
-        border-color: #e74c3c !important;
-        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
-      }
-      
-      .success-field {
-        border-color: #2ecc71 !important;
-      }
-      
-      .password-container {
-        position: relative;
-      }
-      
-      .password-container i {
-        position: absolute;
-        right: 15px;
-        top: 38px;
-        cursor: pointer;
-        color: #6c757d;
-      }
-      
-      .validation-info {
-        background: #f0f8ff;
-        border-left: 4px solid #00b7c2;
-        padding: 15px;
-        margin: 20px 0;
-        border-radius: 0 8px 8px 0;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Encabezado -->
-    <header>
-      <div class="header-container">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt_eZYMvS26mdHNwVQw-zHWqDRdSz5XzAVHQ&s"
-          alt="Logo de Suplementos Dynamite"
-          class="logo"
-        />
-        <h1 id="title">Suplementos Dynamite</h1>
-      </div>
-      <br />
-      <p id="date-time"></p>
-      <nav class="nav-bar">
-        <ul>
-          <li><a href="../index.html">Inicio</a></li>
-          <li>
-            <a href="/html/catalogo-Carrito-Producto-HTML/catalogo.html"
-              >Catálogo</a
-            >
-          </li>
-          <li><a href="../contactoHtml/contacto.html">Contacto</a></li>
-          <li>
-            <a href="/html/loginHtml/login.html" class="btn-login"
-              ><i class="fas fa-user"></i> Iniciar Sesión</a
-            >
-          </li>
-        </ul>
-      </nav>
-    </header>
 
-    <nav class="ruta">
-      <a href="../index.html">Inicio</a> &gt;
-      <a href="login.html">Iniciar Sesión</a> &gt;
-      <a href="../loginHtml/register.html">Registrarse</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Usuario</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="../../css/loginCss/register.css" />
+</head>
+
+<body>
+  <!-- Encabezado -->
+  <header>
+    <div class="header-container">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt_eZYMvS26mdHNwVQw-zHWqDRdSz5XzAVHQ&s"
+        alt="Logo de Suplementos Dynamite" class="logo" />
+      <h1 id="title">Suplementos Dynamite</h1>
+    </div>
+    <br />
+    <p id="date-time"></p>
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="/html/catalogo-Carrito-Producto-HTML/catalogo.html">Catálogo</a></li>
+        <li><a href="../contactoHtml/contacto.html">Contacto</a></li>
+        <li><a href="/html/loginHtml/login.html" class="btn-login"><i class="fas fa-user"></i> Iniciar Sesión</a></li>
+      </ul>
     </nav>
+  </header>
 
-    <!-- FORMULARIO DE REGISTRO -->
+  <!-- Ruta -->
+  <nav class="ruta">
+    <a href="../index.html">Inicio</a> &gt;
+    <a href="login.html">Iniciar Sesión</a> &gt;
+    <a href="../loginHtml/register.html">Registrarse</a>
+  </nav>
+
+  <!-- Contenedor principal -->
   <div class="container">
     <h2>Registro de Usuario</h2>
-    <form id="register-form" novalidate>
-      <!-- Usuario -->
+    <form id="register-form" novalidate enctype="multipart/form-data">
       <label for="reg-usuario">Nombre de usuario:</label>
       <input type="text" id="reg-usuario" required />
-      <small class="error" id="error-usuario"></small>
-      <small>No se permiten caracteres especiales ni símbolos.</small>
 
-      <!-- Contraseña -->
-      <div class="password-container">
-        <label for="reg-contraseña">Contraseña:</label>
-        <input type="password" id="reg-contraseña" required />
-        <i class="fas fa-eye" id="togglePassword"></i>
-        <small class="error" id="error-clave"></small>
-      </div>
-      <small>Debe contener al menos 6 caracteres, 1 mayúscula, 1 minúscula, 1 número y un caracter especial.</small>
+      <label for="reg-contraseña">Contraseña:</label>
+      <input type="password" id="reg-contraseña" required />
 
-      <!-- Repetir contraseña -->
-      <div class="password-container">
-        <label for="reg-repetir">Repetir contraseña:</label>
-        <input type="password" id="reg-repetir" required />
-        <i class="fas fa-eye" id="togglePasswordRepeat"></i>
-        <small class="error" id="error-repetir"></small>
-      </div>
+      <label for="reg-repetir">Repetir contraseña:</label>
+      <input type="password" id="reg-repetir" required />
 
-      <!-- Email -->
       <label for="reg-email">Email:</label>
       <input type="email" id="reg-email" required />
-      <small class="error" id="error-email"></small>
 
-      <!-- Imagen -->
       <label for="imagen">Imagen de perfil:</label>
       <input type="file" id="imagen" name="imagen" required />
-      <!-- Vista previa de la imagen -->
-      <div id="image-preview-container" style="display: none; margin-top: 10px;">
-        <img id="image-preview" src="" alt="Vista previa" style="max-width: 250px; max-height: 250px;">
-        <button type="button" id="remove-image" style="display: block; margin-top: 5px;">
-          Eliminar imagen
-        </button>
-      </div>
-      <small class="error" id="error-imagen"></small>
-      <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
-      
-      <!-- Panel de información de validación -->
-      <div class="validation-info">
-        <h3>Requisitos de contraseña:</h3>
-        <ul>
-          <li>Al menos 6 caracteres</li>
-          <li>1 letra mayúscula</li>
-          <li>1 letra minúscula</li>
-          <li>1 número</li>
-          <li>1 carácter especial (ej: !@#$%^&*)</li>
-        </ul>
-      </div>
-      
-      <!-- reCAPTCHA -->
-      <div class="g-recaptcha" data-sitekey="6LeYuFQrAAAAAHakqw9SEOV0LS4FQIEp8ZnPA7Wn"></div>
-      <small class="error" id="error-recaptcha"></small>  
 
-      <!-- PDF y botón -->
-      <p>
-        <a href="../../docs/RegistroUsuario.pdf" download> Proceso de registro de usuario (PDF)</a>
-      </p>
+      <!-- Selector de cámara -->
+      <label for="cameraSelect">Elegí la cámara:</label>
+      <select id="cameraSelect"></select>
+
+      <!-- Botón para capturar -->
+      <button type="button" onclick="capturarFoto()">Tomar foto</button>
+
+      <!-- Vista previa en vivo -->
+      <video id="video" width="250" height="250" autoplay muted></video>
+
+      <!-- Canvas para mostrar la foto tomada -->
+      <canvas id="canvas" width="250" height="250" style="display:none;"></canvas>
+
+      <!-- Botón para borrar la foto -->
+      <button type="button" id="borrarFoto" style="display:none;">🗑️ Borrar foto</button>
+
+      <!-- Campo oculto para enviar imagen base64 -->
+      <input type="hidden" name="imagenBase64" id="imagenBase64">
+
+      <div class="g-recaptcha" data-sitekey="6LeYuFQrAAAAAHakqw9SEOV0LS4FQIEp8ZnPA7Wn"></div>
 
       <button type="submit"><i class="fas fa-user-plus"></i> Registrarse</button>
       <p><a href="../loginHtml/login.html">Volver al inicio de sesión</a></p>
     </form>
+  </div>
+
+  <footer>
+    <p>Dirección: Av. Pres. Arturo Illia 902, Catamarca, Argentina | Email:
+      contacto@suplementosdynamite.com | Tel: (123) 456-7890</p>
+    <div class="social-icons">
+      <a href="https://wa.me/1234567890" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.instagram.com/suplementosdynamite" target="_blank"><i class="fab fa-instagram"></i></a>
     </div>
+    <p>&copy; 2024 Suplementos Dynamite. Todos los derechos reservados.</p>
+  </footer>
 
-    <!-- PIE DE PÁGINA -->
-    <footer>
-      <p>
-        Dirección: Av. Pres. Arturo Illia 902, Catamarca, Argentina | Email:
-        contacto@suplementosdynamite.com | Tel: (123) 456-7890
-      </p>
-      <div class="social-icons">
-        <a href="https://wa.me/1234567890" target="_blank"
-          ><i class="fab fa-whatsapp"></i
-        ></a>
-        <a href="https://www.instagram.com/suplementosdynamite" target="_blank"
-          ><i class="fab fa-instagram"></i
-        ></a>
-      </div>
-      <p>&copy; 2024 Suplementos Dynamite. Todos los derechos reservados.</p>
-    </footer>
-
-    <script>
-      // Reloj en vivo
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
       const dateTimeElement = document.getElementById("date-time");
       const updateDateTime = () => {
         const now = new Date();
@@ -175,267 +104,142 @@
       setInterval(updateDateTime, 1000);
       updateDateTime();
 
-      // Vista previa de imagen
-      const imagenInput = document.getElementById('imagen');
-      const previewContainer = document.getElementById('image-preview-container');
-      const imagePreview = document.getElementById('image-preview');
-      const removeButton = document.getElementById('remove-image');
-
-      imagenInput.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-          const file = this.files[0];
-          const reader = new FileReader();
-          
-          reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-            previewContainer.style.display = 'block';
-          }
-          
-          reader.readAsDataURL(file);
-        }
-      });
-
-      // Eliminar imagen seleccionada
-      removeButton.addEventListener('click', function() {
-        imagenInput.value = '';
-        imagePreview.src = '';
-        previewContainer.style.display = 'none';
-      });
-
-      // Mostrar/ocultar contraseña
-      document.getElementById('togglePassword').addEventListener('click', function() {
-        const passwordField = document.getElementById('reg-contraseña');
-        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordField.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
-        this.classList.toggle('fa-eye-slash');
-      });
-
-      document.getElementById('togglePasswordRepeat').addEventListener('click', function() {
-        const passwordField = document.getElementById('reg-repetir');
-        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordField.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
-        this.classList.toggle('fa-eye-slash');
-      });
-
-      // Validaciones comunes
-      function textoYNumeros(valor) {
-        return /^[A-Za-z0-9\s]+$/.test(valor.trim());
-      }
-
-      function tieneCaracteresEspeciales(valor) {
-        return /[^A-Za-z0-9\s]/.test(valor);
-      }
-
-      function validarArchivo(input) {
-        const archivo = input.files[0];
-        if (!archivo) return false;
-        const extensionesPermitidas = ["jpg", "jpeg", "png"];
-        const extension = archivo.name.split(".").pop().toLowerCase();
-        return extensionesPermitidas.includes(extension);
-      }
-
-      // Función principal de validación del formulario
-      function validarFormularioUsuario(event) {
+      const form = document.getElementById("register-form");
+      form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        // Obtener campos
         const usuario = document.getElementById("reg-usuario").value.trim();
         const clave = document.getElementById("reg-contraseña").value;
         const repetirClave = document.getElementById("reg-repetir").value;
         const email = document.getElementById("reg-email").value.trim();
         const imagen = document.getElementById("imagen");
-
-        // Mensajes de error
-        let errores = 0;
-        const errorUsuario = document.getElementById("error-usuario");
-        const errorClave = document.getElementById("error-clave");
-        const errorRepetir = document.getElementById("error-repetir");
-        const errorEmail = document.getElementById("error-email");
-        const errorImagen = document.getElementById("error-imagen");
-        const errorRecaptcha = document.getElementById("error-recaptcha");
-
-        // Limpiar errores previos
-        errorUsuario.textContent = "";
-        errorClave.textContent = "";
-        errorRepetir.textContent = "";
-        errorEmail.textContent = "";
-        errorImagen.textContent = "";
-        errorRecaptcha.textContent = "";
-
-        // Resetear clases de error
-        document.getElementById("reg-usuario").classList.remove("error-field", "success-field");
-        document.getElementById("reg-contraseña").classList.remove("error-field", "success-field");
-        document.getElementById("reg-repetir").classList.remove("error-field", "success-field");
-        document.getElementById("reg-email").classList.remove("error-field", "success-field");
-        document.getElementById("imagen").classList.remove("error-field", "success-field");
-
-        // Validaciones
-        if (!textoYNumeros(usuario) || usuario.length < 3) {
-          errorUsuario.textContent = "Debe tener al menos 3 caracteres alfanuméricos.";
-          document.getElementById("reg-usuario").classList.add("error-field");
-          errores++;
-        } else if (tieneCaracteresEspeciales(usuario)) {
-          errorUsuario.textContent = "No se permiten caracteres especiales.";
-          document.getElementById("reg-usuario").classList.add("error-field");
-          errores++;
-        } else {
-          document.getElementById("reg-usuario").classList.add("success-field");
-        }
-
-        // Validación de contraseña
-        if (clave.length < 6) {
-          errorClave.textContent = "Debe tener al menos 6 caracteres.";
-          document.getElementById("reg-contraseña").classList.add("error-field");
-          errores++;
-        } else {
-          // Validar que tenga al menos una mayúscula, una minúscula, un número y un carácter especial
-          const regexClave = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
-          if (!regexClave.test(clave)) {
-            errorClave.textContent = "Debe contener al menos 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial.";
-            document.getElementById("reg-contraseña").classList.add("error-field");
-            errores++;
-          } else {
-            document.getElementById("reg-contraseña").classList.add("success-field");
-          }
-        }
-
-        if (repetirClave !== clave) {
-          errorRepetir.textContent = "Las contraseñas no coinciden.";
-          document.getElementById("reg-repetir").classList.add("error-field");
-          errores++;
-        } else if (clave.length > 0) {
-          document.getElementById("reg-repetir").classList.add("success-field");
-        }
-
-        if (!/\S+@\S+\.\S+/.test(email)) {
-          errorEmail.textContent = "Email inválido.";
-          document.getElementById("reg-email").classList.add("error-field");
-          errores++;
-        } else {
-          document.getElementById("reg-email").classList.add("success-field");
-        }
-
-        // Validar archivo de imagen
-        if (!validarArchivo(imagen)) {
-          errorImagen.textContent = "Debe subir una imagen JPG, JPEG o PNG válida.";
-          document.getElementById("imagen").classList.add("error-field");
-          errores++;
-        } else {
-          document.getElementById("imagen").classList.add("success-field");
-        }
-
         const recaptchaResponse = grecaptcha.getResponse();
-        if (recaptchaResponse.length === 0) {
-          errorRecaptcha.textContent = "Por favor, verifica que eres humano.";
-          errores++;
+
+        if (!recaptchaResponse) {
+          Swal.fire("reCAPTCHA", "Por favor, verificá que no sos un robot.", "warning");
+          return;
         }
 
-        // Si no hay errores, se permite registrar
-        if (errores === 0) {
-          Swal.fire({
-            icon: 'success',
-            title: '¡Registro exitoso!',
-            text: 'Tu cuenta ha sido creada correctamente.',
-            confirmButtonText: 'Aceptar',
-            customClass: {
-              popup: 'animated tada'
-            },
-            willClose: () => {
-              // Redirigir después de cerrar el alert
-              window.location.href = "../loginHtml/login.html";
-            }
+        if (clave !== repetirClave) {
+          Swal.fire("Error", "Las contraseñas no coinciden.", "error");
+          return;
+        }
+
+        const persona_id = localStorage.getItem("persona_id") || 1;
+
+        const formData = new FormData();
+        formData.append("usuario", usuario);
+        formData.append("clave", clave);
+        formData.append("email", email);
+        formData.append("persona_id", persona_id);
+        formData.append("imagen_perfil", imagen.files[0]);
+        formData.append("imagenBase64", inputBase64.value);
+        console.log("📸 Base64 generado:", inputBase64.value.slice(0, 30));
+
+        try {
+          const res = await fetch("http://localhost:3000/usuarios", {
+            method: "POST",
+            body: formData,
           });
-        } else {
-          // Mostrar alerta de error si hay problemas
-          Swal.fire({
-            icon: 'error',
-            title: 'Error en el formulario',
-            text: 'Por favor, corrige los errores marcados en rojo.',
-            confirmButtonText: 'Entendido'
-          });
-        }
-      }
-
-      // Validación en tiempo real para campos
-      document.getElementById("reg-usuario").addEventListener("blur", function() {
-        const usuario = this.value.trim();
-        const errorUsuario = document.getElementById("error-usuario");
-        
-        if (!textoYNumeros(usuario) || usuario.length < 3) {
-          errorUsuario.textContent = "Debe tener al menos 3 caracteres alfanuméricos.";
-          this.classList.add("error-field");
-          this.classList.remove("success-field");
-        } else if (tieneCaracteresEspeciales(usuario)) {
-          errorUsuario.textContent = "No se permiten caracteres especiales.";
-          this.classList.add("error-field");
-          this.classList.remove("success-field");
-        } else {
-          errorUsuario.textContent = "";
-          this.classList.remove("error-field");
-          this.classList.add("success-field");
-        }
-      });
-
-      document.getElementById("reg-contraseña").addEventListener("blur", function() {
-        const clave = this.value;
-        const errorClave = document.getElementById("error-clave");
-        
-        if (clave.length < 6) {
-          errorClave.textContent = "Debe tener al menos 6 caracteres.";
-          this.classList.add("error-field");
-          this.classList.remove("success-field");
-        } else {
-          const regexClave = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/;
-          if (!regexClave.test(clave)) {
-            errorClave.textContent = "Debe contener 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial.";
-            this.classList.add("error-field");
-            this.classList.remove("success-field");
+          const data = await res.json();
+          if (res.ok) {
+            Swal.fire("Registro exitoso", "Usuario creado correctamente.", "success")
+              .then(() => {
+                localStorage.removeItem("persona_id");
+                window.location.href = "../loginHtml/login.html";
+              });
           } else {
-            errorClave.textContent = "";
-            this.classList.remove("error-field");
-            this.classList.add("success-field");
+            Swal.fire("Error", data.error || "No se pudo registrar.", "error");
           }
+        } catch (err) {
+          console.error(err);
+          Swal.fire("Error", "Error de servidor", "error");
         }
       });
+    });
 
-      document.getElementById("reg-repetir").addEventListener("blur", function() {
-        const clave = document.getElementById("reg-contraseña").value;
-        const repetirClave = this.value;
-        const errorRepetir = document.getElementById("error-repetir");
-        
-        if (repetirClave !== clave) {
-          errorRepetir.textContent = "Las contraseñas no coinciden.";
-          this.classList.add("error-field");
-          this.classList.remove("success-field");
-        } else {
-          errorRepetir.textContent = "";
-          this.classList.remove("error-field");
-          this.classList.add("success-field");
-        }
+    const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const inputBase64 = document.getElementById('imagenBase64');
+  const cameraSelect = document.getElementById('cameraSelect');
+  const btnBorrarFoto = document.getElementById('borrarFoto');
+
+  let currentStream = null;
+
+  // Listar cámaras disponibles
+  async function listarCamaras() {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+      cameraSelect.innerHTML = '';
+      videoDevices.forEach((device, index) => {
+        const option = document.createElement('option');
+        option.value = device.deviceId;
+        option.text = device.label || `Cámara ${index + 1}`;
+        cameraSelect.appendChild(option);
       });
 
-      document.getElementById("reg-email").addEventListener("blur", function() {
-        const email = this.value.trim();
-        const errorEmail = document.getElementById("error-email");
-        
-        if (!/\S+@\S+\.\S+/.test(email)) {
-          errorEmail.textContent = "Email inválido.";
-          this.classList.add("error-field");
-          this.classList.remove("success-field");
-        } else {
-          errorEmail.textContent = "";
-          this.classList.remove("error-field");
-          this.classList.add("success-field");
-        }
-      });
+      if (videoDevices.length > 0) {
+        video.style.display = "block";
+        iniciarCamara(videoDevices[0].deviceId); // usar la primera cámara por defecto
+      } else {
+        alert("No se detectaron cámaras disponibles.");
+      }
+    } catch (error) {
+      console.error("Error al acceder a las cámaras:", error);
+      alert("No se pudo acceder a la cámara. Verificá los permisos del navegador.");
+    }
+  }
 
-      // Asociar evento de envío al formulario
-      document.addEventListener("DOMContentLoaded", () => {
-        const form = document.querySelector("#register-form");
-        form.addEventListener("submit", validarFormularioUsuario);
-      });
-    </script>
-  </body>
+  // Iniciar la cámara seleccionada
+  async function iniciarCamara(deviceId) {
+    if (currentStream) {
+      currentStream.getTracks().forEach(track => track.stop());
+    }
+
+    try {
+      const constraints = {
+        video: { deviceId: { exact: deviceId } }
+      };
+
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      video.srcObject = stream;
+      currentStream = stream;
+    } catch (err) {
+      console.error('Error al acceder a la cámara:', err);
+    }
+  }
+
+  // Cambiar de cámara si el usuario selecciona otra
+  cameraSelect.addEventListener('change', () => {
+    iniciarCamara(cameraSelect.value);
+  });
+
+  // Tomar foto
+  function capturarFoto() {
+    const context = canvas.getContext('2d');
+    canvas.style.display = 'block';
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const base64 = canvas.toDataURL('image/jpeg');
+    inputBase64.value = base64;
+
+    btnBorrarFoto.style.display = 'inline-block'; // mostrar botón borrar
+    alert("📸 Foto tomada correctamente.");
+  }
+
+  // Borrar foto
+  btnBorrarFoto.addEventListener('click', () => {
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.style.display = 'none';
+    inputBase64.value = '';
+    btnBorrarFoto.style.display = 'none';
+  });
+
+  // Ejecutar al cargar la página
+  window.addEventListener('load', listarCamaras);
+  </script>
+</body>
 </html>
