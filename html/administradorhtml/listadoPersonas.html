@@ -350,6 +350,32 @@
         font-size: 0.9rem;
       }
     }
+    .btn-edit, .btn-delete {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .btn-edit {
+      background: #3498db;
+      color: white;
+    }
+
+    .btn-delete {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background: #2980b9;
+    }
+
+    .btn-delete:hover {
+      background: #c0392b;
+    }
   </style>
 </head>
 <body>
@@ -377,7 +403,7 @@
   </nav>
 
   <div class="container">
-    <h1>Listado de Personas Registradas</h1>
+    <h1>Personas Registradas</h1>
     
     <div class="controls">
       <div class="search-container">
@@ -433,7 +459,8 @@
             <th>Género</th>
             <th>Provincia</th>
             <th>Fecha Nac.</th>
-            <th>Registro</th>
+            <!-- <th>Registro</th> -->
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody id="table-body">
@@ -538,9 +565,11 @@
         tableBody.innerHTML = '';
         
         // Construir URL con parámetros
-        const url = new URL('http://localhost:3000/personas');
-        url.searchParams.append('page', currentPage);
-        url.searchParams.append('limit', itemsPerPage);
+        const url = new URL('http://localhost:3000/personas/filtradas');
+        // url.searchParams.append('page', currentPage);
+        // url.searchParams.append('limit', itemsPerPage);
+        url.searchParams.append('page', currentPage.toString());
+        url.searchParams.append('limit', itemsPerPage.toString());
         
         if (currentSearch) url.searchParams.append('search', currentSearch);
         if (currentGender) url.searchParams.append('genero', currentGender);
@@ -555,6 +584,7 @@
         const data = await response.json();
         
         // Actualizar paginación
+        totalPages = data.totalPages;
         totalPages = Math.ceil(data.total / itemsPerPage);
         updatePagination();
         
@@ -571,12 +601,18 @@
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'No se pudieron cargar los datos. Por favor, intente nuevamente.',
+          text: error.message || 'No se pudieron cargar los datos. Por favor, intente nuevamente.',
           confirmButtonText: 'Entendido'
         });
       } finally {
         loadingElement.style.display = 'none';
       }
+    }
+    
+    function updatePagination() {
+      pageInfo.textContent = `Página ${currentPage} de ${totalPages || 1}`;
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages || totalPages === 0;
     }
 
     // Función para mostrar estado vacío
@@ -632,9 +668,26 @@
         birthCell.textContent = formatDate(person.fecha_nacimiento);
         
         // Fecha de registro
-        const regDateCell = document.createElement('td');
-        regDateCell.textContent = formatDateTime(person.createdAt || new Date());
+        // const regDateCell = document.createElement('td');
+        // regDateCell.textContent = formatDateTime(person.createdAt || new Date());
         
+         // Celda de acciones
+        const actionsCell = document.createElement('td');
+        actionsCell.style.display = 'flex';
+        actionsCell.style.gap = '8px';
+        
+        // Botón de editar
+        const editBtn = document.createElement('button');
+        editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+        editBtn.classList.add('btn-edit');
+        editBtn.onclick = () => editPerson(person.id);
+        
+        // Botón de eliminar
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        deleteBtn.classList.add('btn-delete');
+        deleteBtn.onclick = () => deletePerson(person.id);
+
         // Construir fila
         row.appendChild(imgCell);
         row.appendChild(nameCell);
@@ -643,10 +696,59 @@
         row.appendChild(genderCell);
         row.appendChild(provinceCell);
         row.appendChild(birthCell);
-        row.appendChild(regDateCell);
+        // row.appendChild(regDateCell);
+
+        actionsCell.appendChild(editBtn);
+        actionsCell.appendChild(deleteBtn);
+        row.appendChild(actionsCell);
+    
         
         tableBody.appendChild(row);
       });
+    }
+    
+    async function editPerson(id) {
+      // Redirigir a la página de edición
+      window.location.href = `../administradorhtml/editarempleado.html?id=${id}`;
+    }
+
+    async function deletePerson(id) {
+      try {
+        const result = await Swal.fire({
+          title: '¿Estás seguro?',
+          text: "¡No podrás revertir esto!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Sí, eliminarlo!'
+        });
+
+        if (result.isConfirmed) {
+          const response = await fetch(`http://localhost:3000/personas/${id}`, {
+            method: 'DELETE'
+          });
+
+          if (response.ok) {
+            Swal.fire(
+              'Eliminado!',
+              'La persona ha sido eliminada.',
+              'success'
+            );
+            // Recargar los datos
+            fetchPeopleData();
+          } else {
+            const error = await response.json();
+            throw new Error(error.error || 'Error al eliminar');
+          }
+        }
+      } catch (error) {
+        Swal.fire(
+          'Error',
+          error.message || 'Ocurrió un error al eliminar la persona',
+          'error'
+        );
+      }
     }
 
     // Actualizar controles de paginación

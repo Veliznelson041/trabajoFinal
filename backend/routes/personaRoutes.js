@@ -117,6 +117,8 @@ const processImage = async (req, res, next) => {
 // Rutas CRUD para personas
 router.get('/:id/imagen', personaController.obtenerImagenPersona);
 router.get('/', personaController.obtenerPersonas);
+router.get('/filtradas', personaController.obtenerPersonasFiltradas);
+router.get('/:id', personaController.obtenerPersonaPorId);
 router.post('/', upload.single('imagen'), processImage, personaController.registrarPersona);
 router.put('/:id', upload.single('imagen'), processImage, personaController.editarPersona);
 router.delete('/:id', personaController.eliminarPersona);

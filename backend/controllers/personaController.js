@@ -8,7 +8,7 @@ const fsp = fs.promises;
 const deleteImageFile = async (filename) => {
   if (!filename || filename === 'default.jpg') return;
   
-  const filePath = path.join(__dirname, '../uploads', filename);
+  const filePath = path.join(__dirname, '../../uploads', filename);
   
   try {
     await fsp.access(filePath);
@@ -52,14 +52,14 @@ exports.obtenerImagenPersona = async (req, res) => {
 
 // POST 
 exports.registrarPersona = async (req, res) => {
-  const { nombre, apellido, dni, calle, provincia, departamento, localidad, genero, fecha_nacimiento, latitud, longitud } = req.body;
+  const { nombre, apellido, dni, calle, provincia, departamento, municipio, localidad, genero, fecha_nacimiento, latitud, longitud } = req.body;
   const imagen = req.file ? req.file.filename : 'default.jpg';
 
   try {
 
     const [result] = await db.execute(
-      'INSERT INTO personas (nombre, apellido, dni, calle, provincia, departamento, localidad, genero, fecha_nacimiento, imagen, latitud, longitud) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [nombre, apellido, dni, calle, provincia, departamento, localidad, genero, fecha_nacimiento, imagen, latitud || null, longitud || null]
+      'INSERT INTO personas (nombre, apellido, dni, calle, provincia, departamento, municipio, localidad, genero, fecha_nacimiento, imagen, latitud, longitud) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [nombre, apellido, dni, calle, provincia, departamento, municipio, localidad, genero, fecha_nacimiento, imagen, latitud || null, longitud || null]
     );
     
     if (req.file && req.body.oldImage && req.body.oldImage !== 'default.jpg') {
@@ -81,6 +81,82 @@ exports.registrarPersona = async (req, res) => {
   }
 };
 
+exports.obtenerPersonaPorId = async (req, res) => {
+    try {
+        const [rows] = await db.execute('SELECT * FROM personas WHERE id = ?', [req.params.id]);
+        
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Persona no encontrada' });
+        }
+        
+        res.json(rows[0]);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener persona.', detalles: error.message });
+    }
+};
+
+// GET con búsqueda y paginación (corregido)
+exports.obtenerPersonasFiltradas = async (req, res) => {
+  const { page = 1, limit = 10, search = '', genero = '', provincia = '' } = req.query;
+  
+  // Validar y convertir parámetros numéricos
+  const pageNum = parseInt(page) || 1;
+  const limitNum = parseInt(limit) || 10;
+  const offset = (pageNum - 1) * limitNum;
+
+  try {
+    let query = `
+      SELECT SQL_CALC_FOUND_ROWS 
+        id, nombre, apellido, dni, provincia, genero, fecha_nacimiento, imagen
+      FROM personas
+      WHERE 1=1
+    `;
+    
+    const params = [];
+
+    if (search) {
+      query += ' AND (nombre LIKE ? OR apellido LIKE ? OR dni LIKE ?)';
+      const searchTerm = `%${search}%`;
+      params.push(searchTerm, searchTerm, searchTerm);
+    }
+
+    if (genero) {
+      query += ' AND genero = ?';
+      params.push(genero);
+    }
+
+    if (provincia) {
+      query += ' AND provincia = ?';
+      params.push(provincia);
+    }
+
+    query += ' ORDER BY id DESC LIMIT ? OFFSET ?';
+    
+    // Asegurar que los parámetros de paginación sean números
+    params.push(limitNum.toString(), offset.toString());
+
+    // console.log('Consulta SQL:', query);
+    // console.log('Parámetros:', params);
+
+    const [rows] = await db.execute(query, params);
+    const [total] = await db.execute('SELECT FOUND_ROWS() as total');
+    const totalRows = total[0].total;
+
+    res.json({
+      personas: rows,
+      total: totalRows,
+      totalPages: Math.ceil(totalRows / limitNum),
+      currentPage: pageNum
+    });
+  } catch (error) {
+    console.error('Error en obtenerPersonasFiltradas:', error);
+    res.status(500).json({ 
+      error: 'Error al obtener personas.', 
+      detalles: error.message
+    });
+  }
+};
+
 // GET 
 exports.obtenerPersonas = async (req, res) => {
   try {
@@ -94,9 +170,9 @@ exports.obtenerPersonas = async (req, res) => {
 // PUT 
 exports.editarPersona = async (req, res) => {
   const { id } = req.params;
-  const { nombre, apellido, dni, calle, provincia, departamento, localidad, genero, fecha_nacimiento, latitud, longitud } = req.body;
+  const { nombre, apellido, dni, calle, provincia, departamento, municipio, localidad, genero, fecha_nacimiento, latitud, longitud } = req.body;
   const newImage = req.file ? req.file.filename : null;
-  console.log(req.body);
+  // console.log(req.body);
   try { 
     const [current] = await db.execute('SELECT imagen FROM personas WHERE id = ?', [id]);
     const oldFilename = current[0]?.imagen;
@@ -107,13 +183,13 @@ exports.editarPersona = async (req, res) => {
       query = `
         UPDATE personas 
         SET nombre = ?, apellido = ?, dni = ?, calle = ?, 
-            provincia = ?, departamento = ?, localidad = ?, 
+            provincia = ?, departamento = ?, municipio = ?, localidad = ?, 
             genero = ?, fecha_nacimiento = ?, imagen = ?,
             latitud = ?, longitud = ? 
         WHERE id = ?`;
       params = [
         nombre, apellido, dni, calle, 
-        provincia, departamento, localidad, 
+        provincia, departamento, municipio, localidad, 
         genero, fecha_nacimiento, newImage,
         latitud || null, longitud || null, id
       ];
@@ -121,13 +197,13 @@ exports.editarPersona = async (req, res) => {
       query = `
         UPDATE personas 
         SET nombre = ?, apellido = ?, dni = ?, calle = ?, 
-            provincia = ?, departamento = ?, localidad = ?, 
+            provincia = ?, departamento = ?, municipio = ?, localidad = ?, 
             genero = ?, fecha_nacimiento = ?,
             latitud = ?, longitud = ? 
         WHERE id = ?`;
       params = [
         nombre, apellido, dni, calle, 
-        provincia, departamento, localidad, 
+        provincia, departamento, municipio, localidad, 
         genero, fecha_nacimiento,
         latitud || null, longitud || null, id
       ];
