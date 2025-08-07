@@ -14,18 +14,33 @@ exports.obtenerUsuarios = async (req, res) => {
 // POST - Agregar usuario (con imagen)
 exports.agregarUsuario = async (req, res) => {
   const { persona_id, usuario, clave, email } = req.body;
-  const imagen = req.file ? req.file.filename : null;
+  const imagen = req.file ? req.file.filename : 'default.jpg';
+
+  // 🔍 Log para confirmar recepción de datos
+  console.log("📥 Datos recibidos:");
+  console.log("persona_id:", persona_id);
+  console.log("usuario:", usuario);
+  console.log("clave:", clave);
+  console.log("email:", email);
+  console.log("imagen:", imagen);
 
   try {
     const [result] = await db.execute(
       'INSERT INTO usuarios (usuario, clave, email, imagen_perfil, persona_id) VALUES (?, ?, ?, ?, ?)',
       [usuario, clave, email, imagen, persona_id]
     );
-    res.status(201).json({ id: result.insertId, message: 'Usuario registrado exitosamente.' });
+
+    res.status(201).json({
+      id: result.insertId,
+      message: 'Usuario registrado exitosamente.'
+    });
+
   } catch (error) {
-    res.status(500).json({ error: 'Error al registrar usuario.', detalles: error });
+    console.error("❌ Error al registrar usuario:", error.message);
+    res.status(500).json({ error: 'Error al registrar usuario.', detalles: error.message });
   }
 };
+
 
 // PUT - Editar usuario por ID
 exports.editarUsuario = async (req, res) => {

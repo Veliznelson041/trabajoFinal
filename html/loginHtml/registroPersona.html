@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro de Persona</title>
-  <link rel="stylesheet" href="../../css/loginCss/register.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/loginCss/register.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <!-- Leaflet CSS y JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -19,30 +20,36 @@
       margin-top: 5px;
       display: block;
     }
+
     .error-field {
       border: 2px solid #e74c3c !important;
     }
+
     .success-field {
       border: 2px solid #2ecc71 !important;
     }
+
     .map-container {
       background: white;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       margin: 20px auto;
       max-width: 1000px;
     }
+
     #map {
       height: 400px;
       border-radius: 8px;
       margin-top: 15px;
     }
+
     .map-controls {
       display: flex;
       gap: 10px;
       margin-top: 15px;
     }
+
     .map-controls button {
       padding: 8px 15px;
       background: #3498db;
@@ -52,9 +59,11 @@
       cursor: pointer;
       font-weight: 500;
     }
+
     .map-controls button:hover {
       background: #2980b9;
     }
+
     .coordinates {
       margin-top: 15px;
       font-size: 0.9rem;
@@ -64,11 +73,12 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="header-container">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt_eZYMvS26mdHNwVQw-zHWqDRdSz5XzAVHQ&s"
-        alt="Logo de Suplementos Dynamite" class="logo"/>
+        alt="Logo de Suplementos Dynamite" class="logo" />
       <h1 id="title">Suplementos Dynamite</h1>
     </div>
     <p id="date-time"></p>
@@ -92,25 +102,25 @@
     <h1>Registro de Persona</h1>
     <form id="register-form" novalidate>
       <label for="nombres">Nombres:</label>
-      <input type="text" id="nombre" name="nombre" required aria-describedby="help-nombres"/>
+      <input type="text" id="nombre" name="nombre" required aria-describedby="help-nombres" />
       <small class="error" id="error-nombre"></small>
       <small id="help-nombres">Solo letras. No se permiten números ni símbolos.</small>
 
       <label for="apellidos">Apellidos:</label>
-      <input type="text" id="apellido" name="apellido" required aria-describedby="help-apellidos"/>
+      <input type="text" id="apellido" name="apellido" required aria-describedby="help-apellidos" />
       <small class="error" id="error-apellido"></small>
       <small id="help-apellidos">Solo letras. No se permiten números ni símbolos.</small>
 
       <label for="dni">DNI:</label>
-      <input type="text" id="dni" name="dni" required maxlength="8" minlength="7" aria-describedby="help-dni"/>
+      <input type="text" id="dni" name="dni" required maxlength="8" minlength="7" aria-describedby="help-dni" />
       <small class="error" id="error-dni"></small>
       <small id="help-dni">Debe contener entre 7 y 8 dígitos numéricos.</small>
 
       <label for="calle">Calle:</label>
-      <input type="text" id="calle" name="calle" required aria-describedby="help-calle"/>
+      <input type="text" id="calle" name="calle" required aria-describedby="help-calle" />
       <small class="error" id="error-calle"></small>
       <small id="help-calle">Puede contener letras y números.</small>
-      
+
       <label for="provincia">Seleccione una provincia:</label>
       <select id="provincia" name="provincia" required>
         <option value="">--Seleccione--</option>
@@ -141,15 +151,15 @@
       <small class="error" id="error-provincia"></small>
 
       <label for="departamento">Departamento:</label>
-      <input type="text" id="departamento" name="departamento" required aria-describedby="help-departamento"/>
+      <input type="text" id="departamento" name="departamento" required aria-describedby="help-departamento" />
       <small class="error" id="error-departamento"></small>
       <small id="help-departamento">Puede contener letras y números.</small>
 
       <label for="localidad">Localidad:</label>
-      <input type="text" id="localidad" name="localidad" required aria-describedby="help-localidad"/>
+      <input type="text" id="localidad" name="localidad" required aria-describedby="help-localidad" />
       <small class="error" id="error-localidad"></small>
       <small id="help-localidad">Puede contener letras y números.</small>
-    
+
       <label for="genero">Género:</label>
       <select id="genero" name="genero" required>
         <option value="">--Seleccione--</option>
@@ -164,13 +174,13 @@
       <small class="error" id="error-fecha"></small>
 
       <label for="imagen">Imagen de perfil:</label>
-      <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" required aria-describedby="help-imagen"/>
+      <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" required aria-describedby="help-imagen" />
       <!-- se mostrará una vista previa de la imagen seleccionada -->
       <div id="image-preview-container" style="display: none; margin-top: 10px;">
-         <img id="image-preview" src="" alt="Vista previa" style="max-width: 250px; max-height: 250px;">
-          <button type="button" id="remove-image" style="display: block; margin-top: 5px;">
-            Eliminar imagen
-           </button>
+        <img id="image-preview" src="" alt="Vista previa" style="max-width: 250px; max-height: 250px;">
+        <button type="button" id="remove-image" style="display: block; margin-top: 5px;">
+          Eliminar imagen
+        </button>
       </div>
       <small class="error" id="error-imagen"></small>
       <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
@@ -216,6 +226,27 @@
   </footer>
 
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.querySelector(".btn-exportar");
+      if (btn) {
+        btn.addEventListener("click", () => {
+          const personaId = localStorage.getItem("persona_id");
+          if (personaId) {
+            const campos = ["nombre", "apellido", "dni", "calle", "provincia", "departamento", "localidad", "genero", "fecha_nacimiento", "imagen"];
+            const url = `http://localhost:3000/exportar/pdf?id=${personaId}&campos=${campos.join(",")}`;
+            window.open(url, "_blank");
+          } else {
+            alert("No se encontró ID de persona. Volvé a registrarte.");
+          }
+        });
+      }
+    });
+  </script>
+
+
+
+
+  <script>
     // Reloj en vivo
     const dateTimeElement = document.getElementById("date-time");
     const updateDateTime = () => {
@@ -238,22 +269,22 @@
     const imagePreview = document.getElementById('image-preview');
     const removeButton = document.getElementById('remove-image');
 
-    imagenInput.addEventListener('change', function() {
+    imagenInput.addEventListener('change', function () {
       if (this.files && this.files[0]) {
         const file = this.files[0];
         const reader = new FileReader();
-        
-        reader.onload = function(e) {
+
+        reader.onload = function (e) {
           imagePreview.src = e.target.result;
           previewContainer.style.display = 'block';
         }
-        
+
         reader.readAsDataURL(file);
       }
     });
 
     // Eliminar imagen seleccionada
-    removeButton.addEventListener('click', function() {
+    removeButton.addEventListener('click', function () {
       imagenInput.value = '';
       imagePreview.src = '';
       previewContainer.style.display = 'none';
@@ -262,11 +293,11 @@
     // Validar archivo
     function validarArchivo(input) {
       if (!input.files || input.files.length === 0) return false;
-      
+
       const archivo = input.files[0];
       const extensionesPermitidas = ["jpg", "jpeg", "png"];
       const extension = archivo.name.split('.').pop().toLowerCase();
-      
+
       return extensionesPermitidas.includes(extension);
     }
 
@@ -286,34 +317,34 @@
     // Función para inicializar el mapa
     function initMap(lat, lon) {
       if (map) map.remove();
-      
+
       // Crear el mapa
       map = L.map('map').setView([lat, lon], 15);
-      
+
       // Añadir capa de tiles
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
       }).addTo(map);
-      
+
       // Crear marcador de usuario
       userMarker = L.marker([lat, lon]).addTo(map)
         .bindPopup('Tu ubicación detectada')
         .openPopup();
-      
+
       // Evento para agregar marcadores al hacer clic
-      map.on('click', function(e) {
+      map.on('click', function (e) {
         // Eliminar marcador anterior si existe
         if (clickMarker) map.removeLayer(clickMarker);
-        
+
         // Crear nuevo marcador
         clickMarker = L.marker(e.latlng).addTo(map)
           .bindPopup('Ubicación seleccionada')
           .openPopup();
-        
+
         // Actualizar coordenadas
         updateCoordinates(e.latlng.lat, e.latlng.lng);
       });
-      
+
       // Actualizar coordenadas
       updateCoordinates(lat, lon);
     }
@@ -329,19 +360,19 @@
     function centerOnUser() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          function(position) {
+          function (position) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             map.setView([lat, lon], 15);
             userLocation = { lat, lon };
-            
+
             // Mover marcador de usuario
             userMarker.setLatLng([lat, lon]);
             updateCoordinates(lat, lon);
-            
+
             document.getElementById("geo-msg").textContent = "Ubicación actualizada correctamente.";
           },
-          function(error) {
+          function (error) {
             Swal.fire({
               icon: 'error',
               title: 'Error de geolocalización',
@@ -361,22 +392,22 @@
     // Obtener ubicación y mostrar en el mapa
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        function(position) {
+        function (position) {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
           userLocation = { lat, lon };
-          
+
           // Asignar valores a los inputs ocultos
           document.getElementById("latitud").value = lat;
           document.getElementById("longitud").value = lon;
-          
+
           // Mostrar mensaje
           document.getElementById("geo-msg").textContent = "Ubicación detectada correctamente.";
-          
+
           // Mostrar mapa
           initMap(lat, lon);
         },
-        function(error) {
+        function (error) {
           // Usar ubicación por defecto si falla
           document.getElementById("geo-msg").textContent = "No se pudo obtener tu ubicación. Usando ubicación por defecto (Catamarca).";
           initMap(userLocation.lat, userLocation.lon);
@@ -389,16 +420,16 @@
 
     // Eventos para los botones del mapa
     document.getElementById('btn-center').addEventListener('click', centerOnUser);
-    
-    document.getElementById('btn-marker').addEventListener('click', function() {
+
+    document.getElementById('btn-marker').addEventListener('click', function () {
       Swal.fire({
         icon: 'info',
         title: 'Marcar ubicación',
         text: 'Haz clic en cualquier lugar del mapa para marcar tu ubicación exacta.'
       });
     });
-    
-    document.getElementById('btn-reset').addEventListener('click', function() {
+
+    document.getElementById('btn-reset').addEventListener('click', function () {
       if (clickMarker) {
         map.removeLayer(clickMarker);
         clickMarker = null;
@@ -412,24 +443,24 @@
     });
 
     // Validación de fecha de nacimiento
-    document.getElementById("fecha_nacimiento").addEventListener("change", function() {
+    document.getElementById("fecha_nacimiento").addEventListener("change", function () {
       const fecha = new Date(this.value);
       const hoy = new Date();
       const errorFecha = document.getElementById("error-fecha");
       errorFecha.textContent = "";
-      
+
       if (fecha >= hoy) {
         errorFecha.textContent = "La fecha de nacimiento no puede ser futura.";
         this.classList.add("error-field");
         return;
       }
-      
+
       // Verificar si es mayor de edad (18 años)
       const edad = hoy.getFullYear() - fecha.getFullYear();
       const m = hoy.getMonth() - fecha.getMonth();
       const d = hoy.getDate() - fecha.getDate();
       let esMayor = edad > 18 || (edad === 18 && (m > 0 || (m === 0 && d >= 0)));
-      
+
       if (!esMayor) {
         errorFecha.textContent = "Debes ser mayor de 18 años para registrarte.";
         this.classList.add("error-field");
@@ -441,26 +472,26 @@
 
     // Validación en tiempo real
     document.querySelectorAll('input, select').forEach(input => {
-      input.addEventListener('blur', function() {
+      input.addEventListener('blur', function () {
         const errorId = `error-${this.id}`;
         const errorElement = document.getElementById(errorId);
         if (!errorElement) return;
-        
+
         errorElement.textContent = "";
         this.classList.remove("error-field", "success-field");
-        
+
         // Validaciones específicas
         if (this.id === 'nombre' || this.id === 'apellido') {
           if (!soloTexto(this.value) || this.value.trim().length < 3) {
-            errorElement.textContent = this.id === 'nombre' ? 
-              "El nombre debe contener solo letras y al menos 3 caracteres." : 
+            errorElement.textContent = this.id === 'nombre' ?
+              "El nombre debe contener solo letras y al menos 3 caracteres." :
               "El apellido debe contener solo letras y al menos 3 caracteres.";
             this.classList.add("error-field");
           } else {
             this.classList.add("success-field");
           }
         }
-        
+
         if (this.id === 'dni') {
           if (!soloNumeros(this.value) || this.value.length < 7 || this.value.length > 8) {
             errorElement.textContent = "El DNI debe tener entre 7 y 8 dígitos numéricos.";
@@ -469,7 +500,7 @@
             this.classList.add("success-field");
           }
         }
-        
+
         if (this.id === 'calle') {
           if (!textoYNumeros(this.value)) {
             errorElement.textContent = "La calle debe contener solo letras y/o números.";
@@ -478,7 +509,7 @@
             this.classList.add("success-field");
           }
         }
-        
+
         if (this.id === 'provincia' || this.id === 'genero') {
           if (!this.value) {
             errorElement.textContent = "Este campo es obligatorio.";
@@ -491,25 +522,25 @@
     });
 
     // Envío del formulario con SweetAlert2
-    document.getElementById('register-form').addEventListener('submit', async function(e) {
+    document.getElementById('register-form').addEventListener('submit', async function (e) {
       e.preventDefault();
 
       // Validar todos los campos
       let valid = true;
       const campos = [
-        'nombre', 'apellido', 'dni', 'calle', 'provincia', 
+        'nombre', 'apellido', 'dni', 'calle', 'provincia',
         'departamento', 'localidad', 'genero', 'fecha_nacimiento', 'imagen'
       ];
-      
+
       campos.forEach(campo => {
         const element = document.getElementById(campo);
         const errorElement = document.getElementById(`error-${campo}`);
-        
+
         if (!errorElement) return;
-        
+
         errorElement.textContent = "";
         element.classList.remove("error-field");
-        
+
         // Validación básica de campo requerido
         if (!element.value) {
           errorElement.textContent = "Este campo es obligatorio.";
@@ -539,25 +570,28 @@
 
       // Enviar formulario
       const formData = new FormData(this);
-      
+
       try {
         const resp = await fetch('http://localhost:3000/personas', {
           method: 'POST',
           body: formData
         });
-        
+
         const resultado = await resp.json();
-        
+
+        console.log("Respuesta backend:", resultado);
+
+
         if (resp.ok) {
-          Swal.fire({
-            icon: 'success',
-            title: '¡Registro exitoso!',
-            text: 'Tu cuenta ha sido creada correctamente.',
-            confirmButtonText: 'Aceptar'
-          }).then(() => {
-            window.location.href = "/html/loginHtml/login.html";
-          });
-        } else {
+          alert("Registro exitoso");
+
+          // Guardar el ID en localStorage
+          localStorage.setItem("persona_id", resultado.id); 
+
+          // Redirigir
+          window.location.href = "/html/loginHtml/registroExitoso.html";
+        }
+        else {
           // Manejar error dni duplicado
           if (resp.status === 409 && resultado.campo === 'dni') {
             Swal.fire({
@@ -588,4 +622,5 @@
     });
   </script>
 </body>
+
 </html>

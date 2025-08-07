@@ -17,7 +17,8 @@ const upload = multer({ storage });
 router.get('/', usuarioController.obtenerUsuarios);
 
 // POST: Agregar un nuevo usuario (con imagen opcional)
-router.post('/', upload.single('imagen'), usuarioController.agregarUsuario);
+router.post('/', upload.single('imagen_perfil'), usuarioController.agregarUsuario);
+
 
 // PUT: Editar un usuario
 router.put('/:id', usuarioController.editarUsuario);
