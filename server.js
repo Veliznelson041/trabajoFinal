@@ -9,9 +9,18 @@ const path = require('path');
 
 const app = express();
 
+// server.js
+// ... (código existente)
+const ubicacionRoutes = require('./backend/routes/ubicacionRoutes'); // Agregar
+
 // Middleware
-app.use(cors());
+app.use(cors({
+   origin: 'http://localhost:3000', // O tu dominio real
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
+// app.use('/uploads', express.static('uploads'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/html', express.static(path.join(__dirname, 'html')));
 app.use('/css', express.static(path.join(__dirname, 'css')));
@@ -24,6 +33,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   }
 }));
 
+
+// Registrar rutas (AGREGAR ESTO)
+//app.use('/api', ubicacionRoutes); // ¡Nueva línea!
 // Rutas
 app.use('/personas', personaRoutes);
 app.use('/api/usuarios', usuarioRoutes);
