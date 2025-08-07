@@ -63,25 +63,19 @@ exports.obtenerUsuarios = async (req, res) => {
 // POST 
 exports.agregarUsuario = async (req, res) => {
   const { persona_id, usuario, clave, email } = req.body;
-  const imagen = req.file ? req.file.filename : 'default.jpg';
+  const imagen = req.file ? req.file.filename : null;
 
   try {
     const [result] = await db.execute(
       'INSERT INTO usuarios (usuario, clave, email, imagen_perfil, persona_id) VALUES (?, ?, ?, ?, ?)',
       [usuario, clave, email, imagen, persona_id]
     );
-    
-    if (req.file && req.body.oldImage && req.body.oldImage !== 'default.jpg') {
-      deleteImageFile(req.body.oldImage);
-    }
     res.status(201).json({ id: result.insertId, message: 'Usuario registrado exitosamente.' });
   } catch (error) {
-       if (req.file?.limpiarArchivos) {
-      await limpiarArchivos(req.file.limpiarArchivos);
-    }
     res.status(500).json({ error: 'Error al registrar usuario.', detalles: error });
   }
 };
+
 
 // PUT 
 exports.editarUsuario = async (req, res) => {

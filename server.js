@@ -3,7 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./backend/db"); // conexión MySQL
 const personaRoutes = require("./backend/routes/personaRoutes");
-const usuarioRoutes = require("./backend/routes/usuarioRoutes"); // ✅ Solo una vez
+const exportarRoutes = require('./backend/routes/exportarRoutes'); 
+const usuarioRoutes = require('./backend/routes/usuarioRoutes');
 const path = require('path');
 
 const app = express();
@@ -19,12 +20,11 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
-app.use('/api', ubicacionRoutes); // Nueva línea
 // app.use('/uploads', express.static('uploads'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(express.static("html"));
+app.use('/html', express.static(path.join(__dirname, 'html')));
+app.use('/css', express.static(path.join(__dirname, 'css')));
 
-// Agregar esta línea después de los middlewares
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.webp')) {
@@ -38,9 +38,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
 //app.use('/api', ubicacionRoutes); // ¡Nueva línea!
 // Rutas
 app.use('/personas', personaRoutes);
-// Si querés habilitar también la ruta de usuario, dejá esta línea:
-app.use('/usuarios', usuarioRoutes);
-
+app.use('/api/usuarios', usuarioRoutes);
+app.use('/', exportarRoutes); // ✅ Solo una vez
 
 // Levantar servidor
 const PORT = 3000;

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro de Persona</title>
+  <link rel="stylesheet" href="../../css/loginCss/register.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <!-- Leaflet CSS y JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -197,67 +199,20 @@
       color: #e74c3c;
       font-size: 0.85rem;
     }
-    
     .error-field {
       border-color: #e74c3c !important;
     }
-    
     .success-field {
       border-color: #2ecc71 !important;
     }
-    
-    button[type="submit"] {
-      width: 100%;
-      background: linear-gradient(to right, #db3434, #674b4b);
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 10px;
+    .map-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      max-width: 1000px;
     }
-    
-    button[type="submit"]:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
-    }
-    
-    .form-link {
-      text-align: center;
-      margin-top: 10px;
-    }
-    
-    .form-link a {
-      color: #db3434;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    .form-link a:hover {
-      text-decoration: underline;
-    }
-    
-    /* Mapa y controles */
-    .map-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    
-    .map-header h3 {
-      color: #2c3e50;
-      font-size: 1.4rem;
-    }
-    
-    .map-header p {
-      color: #6c757d;
-      font-size: 0.95rem;
-    }
-    
     #map {
       height: 400px; /* Altura fija para PC */
       border-radius: 10px;
@@ -274,20 +229,14 @@
       border-radius: 8px;
       border: 1px solid #e1e5eb;
     }
-    
     .map-controls {
       display: flex;
       gap: 12px;
       margin-top: 15px;
       justify-content: center;
     }
-    
-    .map-control {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 45px;
-      height: 45px;
+    .map-controls button {
+      padding: 8px 15px;
       background: #3498db;
       color: white;
       border-radius: 50%;
@@ -340,114 +289,24 @@
       transition: all 0.3s ease;
       font-weight: 500;
     }
-    
-    #remove-image:hover {
-      background: #c0392b;
+    .map-controls button:hover {
+      background: #2980b9;
     }
-    
-    /* Nuevos estilos para formulario horizontal */
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-    
-    .form-column {
-      flex: 1;
-      min-width: 250px;
-    }
-    
-    .map-section {
-      width: 100%;
-      margin-top: 20px;
-    }
-    
-    #map {
-      height: 400px;
-    }
-    
-    /* Pie de página */
-    footer {
-      background: #2c3e50;
-      color: white;
-      padding: 30px 5%;
-      text-align: center;
-      margin-top: 40px;
-    }
-    
-    footer p {
-      margin-bottom: 15px;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-    
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin: 20px 0;
-    }
-    
-    .social-icons a {
-      color: white;
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
-    }
-    
-    .social-icons a:hover {
-      transform: translateY(-3px);
-      color: #3498db;
-    }
-    
-    /* Estilos responsivos */
-    @media (max-width: 992px) {
-      .form-container {
-        flex-direction: column;
-      }
-      
-      .map-header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-      }
-      
-      .map-controls {
-        justify-content: center;
-      }
-    }
-    
-    @media (max-width: 768px) {
-      .form-row {
-        flex-direction: column;
-        gap: 0;
-      }
-      
-      .form-column {
-        min-width: 100%;
-      }
-    }
-    
-    @media (max-width: 576px) {
-      .container {
-        padding: 0 15px;
-      }
-      
-      .form-section, .map-section {
-        padding: 20px;
-      }
-      
-      #map {
-        height: 300px;
-      }
+    .coordinates {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 5px;
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="header-container">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt_eZYMvS26mdHNwVQw-zHWqDRdSz5XzAVHQ&s"
-        alt="Logo de Suplementos Dynamite" class="logo"/>
+        alt="Logo de Suplementos Dynamite" class="logo" />
       <h1 id="title">Suplementos Dynamite</h1>
     </div>
     <p id="date-time"></p>
@@ -470,110 +329,102 @@
 
   <div class="container">
     <h1>Registro de Persona</h1>
+    <form id="register-form" novalidate>
+      <label for="nombres">Nombres:</label>
+      <input type="text" id="nombre" name="nombre" required aria-describedby="help-nombres"/>
+      <small class="error" id="error-nombre"></small>
+      <small id="help-nombres">Solo letras. No se permiten números ni símbolos.</small>
+
+      <label for="apellidos">Apellidos:</label>
+      <input type="text" id="apellido" name="apellido" required aria-describedby="help-apellidos"/>
+      <small class="error" id="error-apellido"></small>
+      <small id="help-apellidos">Solo letras. No se permiten números ni símbolos.</small>
+
+      <label for="dni">DNI:</label>
+      <input type="text" id="dni" name="dni" required maxlength="8" minlength="7" aria-describedby="help-dni"/>
+      <small class="error" id="error-dni"></small>
+      <small id="help-dni">Debe contener entre 7 y 8 dígitos numéricos.</small>
+
+      <label for="calle">Calle:</label>
+      <input type="text" id="calle" name="calle" required aria-describedby="help-calle"/>
+      <small class="error" id="error-calle"></small>
+      <small id="help-calle">Puede contener letras y números.</small>
+      
+      <label for="provincia">Seleccione una provincia:</label>
+      <select id="provincia" name="provincia" required>
+        <option value="">--Seleccione--</option>
+        <option value="Buenos Aires">Buenos Aires</option>
+        <option value="Catamarca">Catamarca</option>
+        <option value="Chaco">Chaco</option>
+        <option value="Chubut">Chubut</option>
+        <option value="Córdoba">Córdoba</option>
+        <option value="Corrientes">Corrientes</option>
+        <option value="Entre Ríos">Entre Ríos</option>
+        <option value="Formosa">Formosa</option>
+        <option value="Jujuy">Jujuy</option>
+        <option value="La Pampa">La Pampa</option>
+        <option value="La Rioja">La Rioja</option>
+        <option value="Mendoza">Mendoza</option>
+        <option value="Misiones">Misiones</option>
+        <option value="Neuquén">Neuquén</option>
+        <option value="Río Negro">Río Negro</option>
+        <option value="Salta">Salta</option>
+        <option value="San Juan">San Juan</option>
+        <option value="San Luis">San Luis</option>
+        <option value="Santa Cruz">Santa Cruz</option>
+        <option value="Santa Fe">Santa Fe</option>
+        <option value="Santiago del Estero">Santiago del Estero</option>
+        <option value="Tierra del Fuego">Tierra del Fuego</option>
+        <option value="Tucumán">Tucumán</option>
+      </select>
+      <small class="error" id="error-provincia"></small>
+
+      <label for="departamento">Departamento:</label>
+      <input type="text" id="departamento" name="departamento" required aria-describedby="help-departamento"/>
+      <small class="error" id="error-departamento"></small>
+      <small id="help-departamento">Puede contener letras y números.</small>
+
+      <label for="localidad">Localidad:</label>
+      <input type="text" id="localidad" name="localidad" required aria-describedby="help-localidad"/>
+      <small class="error" id="error-localidad"></small>
+      <small id="help-localidad">Puede contener letras y números.</small>
     
-    <div class="form-container">
-      <div class="form-section">
-        <form id="register-form" novalidate>
-          <div class="form-row">
-            <div class="form-column">
-              <div class="form-group">
-                <label for="nombres">Nombres:</label>
-                <input type="text" id="nombre" name="nombre" required aria-describedby="help-nombres"/>
-                <small class="error" id="error-nombre"></small>
-                <small id="help-nombres">Solo letras. No se permiten números ni símbolos.</small>
-              </div>
+      <label for="genero">Género:</label>
+      <select id="genero" name="genero" required>
+        <option value="">--Seleccione--</option>
+        <option value="masculino">Masculino</option>
+        <option value="femenino">Femenino</option>
+        <option value="otro">Otro</option>
+      </select>
+      <small class="error" id="error-genero"></small>
 
-              <div class="form-group">
-                <label for="apellidos">Apellidos:</label>
-                <input type="text" id="apellido" name="apellido" required aria-describedby="help-apellidos"/>
-                <small class="error" id="error-apellido"></small>
-                <small id="help-apellidos">Solo letras. No se permiten números ni símbolos.</small>
-              </div>
+      <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+      <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required />
+      <small class="error" id="error-fecha"></small>
 
-              <div class="form-group">
-                <label for="dni">DNI:</label>
-                <input type="text" id="dni" name="dni" required maxlength="8" minlength="7" aria-describedby="help-dni"/>
-                <small class="error" id="error-dni"></small>
-                <small id="help-dni">Debe contener entre 7 y 8 dígitos numéricos.</small>
-              </div>
+      <label for="imagen">Imagen de perfil:</label>
+      <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" required aria-describedby="help-imagen"/>
+      <!-- se mostrará una vista previa de la imagen seleccionada -->
+      <div id="image-preview-container" style="display: none; margin-top: 10px;">
+         <img id="image-preview" src="" alt="Vista previa" style="max-width: 250px; max-height: 250px;">
+          <button type="button" id="remove-image" style="display: block; margin-top: 5px;">
+            Eliminar imagen
+           </button>
+      </div>
+      <small class="error" id="error-imagen"></small>
+      <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
 
-              <div class="form-group">
-                <label for="genero">Género:</label>
-                <select id="genero" name="genero" required>
-                  <option value="">--Seleccione--</option>
-                  <option value="masculino">Masculino</option>
-                  <option value="femenino">Femenino</option>
-                  <option value="otro">Otro</option>
-                </select>
-                <small class="error" id="error-genero"></small>
-              </div>
-            </div>
+      <!-- Geolocalización automática -->
+      <input type="hidden" name="latitud" id="latitud">
+      <input type="hidden" name="longitud" id="longitud">
+      <p id="geo-msg" style="color: green; font-size: 0.9em;"></p>
 
-            <div class="form-column">
-              <div class="form-group">
-                <label for="provincia">Seleccione una provincia:</label>
-                <select id="provincia" name="provincia" required>
-                  <option value="">--Seleccione--</option>
-                  <!-- Provincias se cargarán desde la base de datos -->
-                </select>
-                <small class="error" id="error-provincia"></small>
-              </div>
+      <p><a href="../../docs/RegistroPersona.pdf" download>Proceso de registro de persona (PDF)</a></p>
 
-              <div class="form-group">
-                <label for="departamento">Departamento:</label>
-                <select id="departamento" name="departamento" required disabled>
-                  <option value="">--Seleccione provincia primero--</option>
-                </select>
-                <small class="error" id="error-departamento"></small>
-              </div>
-
-              <div class="form-group">
-                <label for="municipio">Municipio:</label>
-                <select id="municipio" name="municipio" required disabled>
-                  <option value="">--Seleccione departamento primero--</option>
-                </select>
-                <small class="error" id="error-municipio"></small>
-              </div>
-              
-              <div class="form-group">
-                <label for="localidad">Localidad:</label>
-                <select id="localidad" name="localidad" required disabled>
-                  <option value="">--Seleccione municipio primero--</option>
-                </select>
-                <small class="error" id="error-localidad"></small>
-              </div>
-
-              <div class="form-group">
-                <label for="calle">Calle:</label>
-                <input type="text" id="calle" name="calle" required aria-describedby="help-calle"/>
-                <small class="error" id="error-calle"></small>
-                <small id="help-calle">Puede contener letras y números.</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-column">
-              <div class="form-group">
-                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required />
-                <small class="error" id="error-fecha"></small>
-              </div>
-            </div>
-            
-            <div class="form-column">
-              <div class="form-group">
-                <label for="imagen">Imagen de perfil:</label>
-                <input type="file" id="imagen" name="imagen" accept=".jpg,.jpeg,.png" required aria-describedby="help-imagen"/>
-                <div id="image-preview-container">
-                  <img id="image-preview" src="" alt="Vista previa">
-                  <button type="button" id="remove-image">Eliminar imagen</button>
-                </div>
-                <small class="error" id="error-imagen"></small>
-                <small id="help-imagen">Formatos permitidos: JPG, JPEG o PNG.</small>
-              </div>
-            </div>
-          </div>
+      <button type="submit">Registrarse</button>
+      <p><a href="../loginHtml/login.html">Volver al inicio de sesión</a></p>
+    </form>
+  </div>
 
           <!-- Sección del mapa movida aquí (después de la imagen) -->
           <div class="map-section">
@@ -636,6 +487,27 @@
   </footer>
 
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.querySelector(".btn-exportar");
+      if (btn) {
+        btn.addEventListener("click", () => {
+          const personaId = localStorage.getItem("persona_id");
+          if (personaId) {
+            const campos = ["nombre", "apellido", "dni", "calle", "provincia", "departamento", "localidad", "genero", "fecha_nacimiento", "imagen"];
+            const url = `http://localhost:3000/exportar/pdf?id=${personaId}&campos=${campos.join(",")}`;
+            window.open(url, "_blank");
+          } else {
+            alert("No se encontró ID de persona. Volvé a registrarte.");
+          }
+        });
+      }
+    });
+  </script>
+
+
+
+
+  <script>
     // Reloj en vivo
     const dateTimeElement = document.getElementById("date-time");
     const updateDateTime = () => {
@@ -683,22 +555,22 @@
     const imagePreview = document.getElementById('image-preview');
     const removeButton = document.getElementById('remove-image');
 
-    imagenInput.addEventListener('change', function() {
+    imagenInput.addEventListener('change', function () {
       if (this.files && this.files[0]) {
         const file = this.files[0];
         const reader = new FileReader();
-        
-        reader.onload = function(e) {
+
+        reader.onload = function (e) {
           imagePreview.src = e.target.result;
           previewContainer.style.display = 'block';
         }
-        
+
         reader.readAsDataURL(file);
       }
     });
 
     // Eliminar imagen seleccionada
-    removeButton.addEventListener('click', function() {
+    removeButton.addEventListener('click', function () {
       imagenInput.value = '';
       imagePreview.src = '';
       previewContainer.style.display = 'none';
@@ -707,11 +579,11 @@
     // Validar archivo
     function validarArchivo(input) {
       if (!input.files || input.files.length === 0) return false;
-      
+
       const archivo = input.files[0];
       const extensionesPermitidas = ["jpg", "jpeg", "png"];
       const extension = archivo.name.split('.').pop().toLowerCase();
-      
+
       return extensionesPermitidas.includes(extension);
     }
 
@@ -731,37 +603,37 @@
     // Función para inicializar el mapa
     function initMap(lat, lon) {
       if (map) map.remove();
-      
+
       // Crear el mapa
       map = L.map('map').setView([lat, lon], 15);
-      
+
       // Añadir capa de tiles
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
       }).addTo(map);
-      
+
       // Crear marcador de usuario
       userMarker = L.marker([lat, lon], {icon: userIcon}).addTo(map)
         .bindPopup('Tu ubicación detectada')
         .openPopup();
-      
+
       // Evento para agregar marcadores al hacer clic
-      map.on('click', function(e) {
+      map.on('click', function (e) {
         // Eliminar marcador anterior si existe
         if (clickMarker) map.removeLayer(clickMarker);
         
-        // Crear nuevo marcador con icono diferente
-        clickMarker = L.marker(e.latlng, {icon: markerIcon}).addTo(map)
+        // Crear nuevo marcador
+        clickMarker = L.marker(e.latlng).addTo(map)
           .bindPopup('Ubicación seleccionada')
           .openPopup();
-        
+
         // Actualizar coordenadas
         updateCoordinates(e.latlng.lat, e.latlng.lng);
         
         // Mostrar botón de confirmación
         btnConfirm.style.display = 'flex';
       });
-      
+
       // Actualizar coordenadas
       updateCoordinates(lat, lon);
     }
@@ -777,19 +649,19 @@
     function centerOnUser() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          function(position) {
+          function (position) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             map.setView([lat, lon], 15);
             userLocation = { lat, lon };
-            
+
             // Mover marcador de usuario
             userMarker.setLatLng([lat, lon]);
             updateCoordinates(lat, lon);
-            
+
             document.getElementById("geo-msg").textContent = "Ubicación actualizada correctamente.";
           },
-          function(error) {
+          function (error) {
             Swal.fire({
               icon: 'error',
               title: 'Error de geolocalización',
@@ -853,22 +725,22 @@
     // Obtener ubicación y mostrar en el mapa
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        function(position) {
+        function (position) {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
           userLocation = { lat, lon };
-          
+
           // Asignar valores a los inputs ocultos
           document.getElementById("latitud").value = lat;
           document.getElementById("longitud").value = lon;
-          
+
           // Mostrar mensaje
           document.getElementById("geo-msg").textContent = "Ubicación detectada correctamente.";
-          
+
           // Mostrar mapa
           initMap(lat, lon);
         },
-        function(error) {
+        function (error) {
           // Usar ubicación por defecto si falla
           document.getElementById("geo-msg").textContent = "No se pudo obtener tu ubicación. Usando ubicación por defecto (Catamarca).";
           initMap(userLocation.lat, userLocation.lon);
@@ -881,8 +753,8 @@
 
     // Eventos para los controles del mapa
     document.getElementById('btn-center').addEventListener('click', centerOnUser);
-    
-    document.getElementById('btn-marker').addEventListener('click', function() {
+
+    document.getElementById('btn-marker').addEventListener('click', function () {
       Swal.fire({
         icon: 'info',
         title: 'Marcar ubicación',
@@ -891,8 +763,8 @@
         showConfirmButton: false
       });
     });
-    
-    document.getElementById('btn-reset').addEventListener('click', function() {
+
+    document.getElementById('btn-reset').addEventListener('click', function () {
       if (clickMarker) {
         map.removeLayer(clickMarker);
         clickMarker = null;
@@ -911,24 +783,24 @@
     document.getElementById('btn-confirm').addEventListener('click', confirmLocation);
 
     // Validación de fecha de nacimiento
-    document.getElementById("fecha_nacimiento").addEventListener("change", function() {
+    document.getElementById("fecha_nacimiento").addEventListener("change", function () {
       const fecha = new Date(this.value);
       const hoy = new Date();
       const errorFecha = document.getElementById("error-fecha");
       errorFecha.textContent = "";
-      
+
       if (fecha >= hoy) {
         errorFecha.textContent = "La fecha de nacimiento no puede ser futura.";
         this.classList.add("error-field");
         return;
       }
-      
+
       // Verificar si es mayor de edad (18 años)
       const edad = hoy.getFullYear() - fecha.getFullYear();
       const m = hoy.getMonth() - fecha.getMonth();
       const d = hoy.getDate() - fecha.getDate();
       let esMayor = edad > 18 || (edad === 18 && (m > 0 || (m === 0 && d >= 0)));
-      
+
       if (!esMayor) {
         errorFecha.textContent = "Debes ser mayor de 18 años para registrarte.";
         this.classList.add("error-field");
@@ -940,26 +812,26 @@
 
     // Validación en tiempo real
     document.querySelectorAll('input, select').forEach(input => {
-      input.addEventListener('blur', function() {
+      input.addEventListener('blur', function () {
         const errorId = `error-${this.id}`;
         const errorElement = document.getElementById(errorId);
         if (!errorElement) return;
-        
+
         errorElement.textContent = "";
         this.classList.remove("error-field", "success-field");
-        
+
         // Validaciones específicas
         if (this.id === 'nombre' || this.id === 'apellido') {
           if (!soloTexto(this.value) || this.value.trim().length < 3) {
-            errorElement.textContent = this.id === 'nombre' ? 
-              "El nombre debe contener solo letras y al menos 3 caracteres." : 
+            errorElement.textContent = this.id === 'nombre' ?
+              "El nombre debe contener solo letras y al menos 3 caracteres." :
               "El apellido debe contener solo letras y al menos 3 caracteres.";
             this.classList.add("error-field");
           } else {
             this.classList.add("success-field");
           }
         }
-        
+
         if (this.id === 'dni') {
           if (!soloNumeros(this.value) || this.value.length < 7 || this.value.length > 8) {
             errorElement.textContent = "El DNI debe tener entre 7 y 8 dígitos numéricos.";
@@ -968,7 +840,7 @@
             this.classList.add("success-field");
           }
         }
-        
+
         if (this.id === 'calle') {
           if (!textoYNumeros(this.value)) {
             errorElement.textContent = "La calle debe contener solo letras y/o números.";
@@ -977,7 +849,7 @@
             this.classList.add("success-field");
           }
         }
-        
+
         if (this.id === 'provincia' || this.id === 'genero') {
           if (!this.value) {
             errorElement.textContent = "Este campo es obligatorio.";
@@ -1142,31 +1014,31 @@
 
     // Envío del formulario con SweetAlert2
     document.getElementById('register-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
+      e.preventDefault();
 
-        // Validar todos los campos
-        let valid = true;
-        const campos = [
-            'nombre', 'apellido', 'dni', 'calle', 'provincia', 
-            'departamento', 'municipio', 'localidad', 'genero', 'fecha_nacimiento', 'imagen'
-        ];
+      // Validar todos los campos
+      let valid = true;
+      const campos = [
+        'nombre', 'apellido', 'dni', 'calle', 'provincia', 
+        'departamento', 'localidad', 'genero', 'fecha_nacimiento', 'imagen'
+      ];
+      
+      campos.forEach(campo => {
+        const element = document.getElementById(campo);
+        const errorElement = document.getElementById(`error-${campo}`);
         
-        campos.forEach(campo => {
-            const element = document.getElementById(campo);
-            const errorElement = document.getElementById(`error-${campo}`);
-            
-            if (!errorElement) return;
-            
-            errorElement.textContent = "";
-            element.classList.remove("error-field");
-            
-            // Validación básica de campo requerido
-            if (!element.value) {
-                errorElement.textContent = "Este campo es obligatorio.";
-                element.classList.add("error-field");
-                valid = false;
-            }
-        });
+        if (!errorElement) return;
+        
+        errorElement.textContent = "";
+        element.classList.remove("error-field");
+        
+        // Validación básica de campo requerido
+        if (!element.value) {
+          errorElement.textContent = "Este campo es obligatorio.";
+          element.classList.add("error-field");
+          valid = false;
+        }
+      });
 
         // Validación adicional para imagen
         const imagen = document.getElementById('imagen');
@@ -1187,110 +1059,56 @@
             return;
         }
 
-        // Mostrar comprobante de registro
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
-        
-        // Crear mensaje de comprobante
-        let comprobanteHTML = `
-            <div style="text-align: left; max-width: 500px; margin: 0 auto; padding: 15px; background: #f8f9fa; border-radius: 10px;">
-                <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">Comprobante de Registro</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div><strong>Nombres:</strong></div>
-                    <div>${data.nombre}</div>
-                    
-                    <div><strong>Apellidos:</strong></div>
-                    <div>${data.apellido}</div>
-                    
-                    <div><strong>DNI:</strong></div>
-                    <div>${data.dni}</div>
-                    
-                    <div><strong>Género:</strong></div>
-                    <div>${data.genero}</div>
-                    
-                    <div><strong>Fecha Nacimiento:</strong></div>
-                    <div>${data.fecha_nacimiento}</div>
-                    
-                    <div><strong>Provincia:</strong></div>
-                    <div>${provinciaSelect.options[provinciaSelect.selectedIndex].text}</div>
-                    
-                    <div><strong>Departamento:</strong></div>
-                    <div>${departamentoSelect.options[departamentoSelect.selectedIndex].text}</div>
-                    
-                    <div><strong>Municipio:</strong></div>
-                    <div>${municipioSelect.options[municipioSelect.selectedIndex].text}</div>
-                    
-                    <div><strong>Localidad:</strong></div>
-                    <div>${localidadSelect.options[localidadSelect.selectedIndex].text}</div>
-                    
-                    <div><strong>Calle:</strong></div>
-                    <div>${data.calle}</div>
-                </div>
-                <div style="margin-top: 20px; text-align: center; color: #27ae60; font-weight: 600;">
-                    <i class="fas fa-check-circle"></i> Registro exitoso
-                </div>
-            </div>
-        `;
-
-        Swal.fire({
-            title: 'Registro Completo',
-            html: comprobanteHTML,
-            icon: 'success',
-            confirmButtonText: 'Continuar',
-            customClass: {
-                container: 'comprobante-container'
-            }
-        }).then(async () => {
-            // Enviar formulario al backend
-            const formData = new FormData(document.getElementById('register-form'));
-            
-            try {
-                const resp = await fetch('http://localhost:3000/personas', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const resultado = await resp.json();
-                
-                if (resp.ok) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Registro exitoso!',
-                        text: 'Tu cuenta ha sido creada correctamente.',
-                        confirmButtonText: 'Aceptar'
-                    }).then(() => {
-                        window.location.href = "../administradorhtml/listadoPersonas.html";
-                    });
-                } else {
-                    // Manejar error dni duplicado
-                    if (resp.status === 409 && resultado.campo === 'dni') {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: resultado.error,
-                            confirmButtonText: 'Entendido'
-                        });
-                        document.getElementById("dni").focus();
-                        document.getElementById("dni").select();
-                        return;
-                    }
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error al registrar',
-                        text: resultado.error || 'Error desconocido',
-                        confirmButtonText: 'Entendido'
-                    });
-                }
-            } catch (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error de conexión',
-                    text: 'No se pudo conectar con el servidor. Intente nuevamente.',
-                    confirmButtonText: 'Entendido'
-                });
-            }
+      // Enviar formulario
+      const formData = new FormData(this);
+      
+      try {
+        const resp = await fetch('http://localhost:3000/personas', {
+          method: 'POST',
+          body: formData
         });
+        
+        const resultado = await resp.json();
+        
+        if (resp.ok) {
+          Swal.fire({
+            icon: 'success',
+            title: '¡Registro exitoso!',
+            text: 'Tu cuenta ha sido creada correctamente.',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            window.location.href = "/html/loginHtml/login.html";
+          });
+        } else {
+          // Manejar error dni duplicado
+          if (resp.status === 409 && resultado.campo === 'dni') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: resultado.error,
+              confirmButtonText: 'Entendido'
+            });
+            document.getElementById("dni").focus();
+            document.getElementById("dni").select();
+            return;
+          }
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al registrar',
+            text: resultado.error || 'Error desconocido',
+            confirmButtonText: 'Entendido'
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de conexión',
+          text: 'No se pudo conectar con el servidor. Intente nuevamente.',
+          confirmButtonText: 'Entendido'
+        });
+      }
     });
 </script>
 </body>
+
 </html>

@@ -109,7 +109,16 @@ const limpiarArchivos = async (filePaths) => {
 
 
 router.get('/', usuarioController.obtenerUsuarios);
+<<<<<<< HEAD
+
+// POST: Agregar un nuevo usuario (con imagen opcional)
+router.post('/', upload.single('imagen_perfil'), usuarioController.agregarUsuario);
+
+
+// PUT: Editar un usuario
+=======
 router.post('/', upload.single('imagen'), usuarioController.agregarUsuario);
+>>>>>>> 4fa54759ba3055670243d474bd4947fe5c90edfa
 router.put('/:id', usuarioController.editarUsuario);
 router.delete('/:id', usuarioController.eliminarUsuario);
 
