@@ -81,7 +81,7 @@ exports.registrarPersona = async (req, res) => {
   }
 };
 
-exports.obtenerPersonaPorId = async (req, res) => {
+/* exports.obtenerPersonaPorId = async (req, res) => {
     try {
         const [rows] = await db.execute('SELECT * FROM personas WHERE id = ?', [req.params.id]);
         
@@ -93,7 +93,42 @@ exports.obtenerPersonaPorId = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener persona.', detalles: error.message });
     }
+}; */
+
+exports.obtenerPersonaPorId = async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                p.*,
+                pr.nombre AS provincia_nombre,
+                d.nombre AS departamento_nombre,
+                m.nombre AS municipio_nombre
+            FROM personas p
+            LEFT JOIN provincias pr ON p.provincia = pr.id
+            LEFT JOIN departamentos d ON p.departamento = d.id
+            LEFT JOIN municipios m ON p.municipio = m.id
+            WHERE p.id = ?
+        `;
+        const [rows] = await db.execute(query, [req.params.id]);
+        
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Persona no encontrada' });
+        }
+        
+        // Reestructurar el objeto para mantener los IDs y agregar los nombres
+        const persona = {
+            ...rows[0],
+            provincia_nombre: rows[0].provincia_nombre,
+            departamento_nombre: rows[0].departamento_nombre,
+            municipio_nombre: rows[0].municipio_nombre
+        };
+
+        res.json(persona);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener persona.', detalles: error.message });
+    }
 };
+
 
 // GET con búsqueda y paginación (corregido)
 exports.obtenerPersonasFiltradas = async (req, res) => {

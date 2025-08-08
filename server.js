@@ -14,15 +14,23 @@ const ubicacionRoutes = require('./backend/routes/ubicacionRoutes'); // Agregar
 
 // Middleware
 app.use(cors({
-   origin: 'http://localhost:3000', // O tu dominio real
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+  origin: ['http://localhost:3000', 'http://127.0.0.1:5505'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 app.use(express.json());
 app.use('/api', ubicacionRoutes); // Nueva línea
 // app.use('/uploads', express.static('uploads'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static("html"));
+
+//rama cris//
+
+app.use('/css', express.static(path.join(__dirname, 'css')));
+
+app.use(express.static(path.join(__dirname, 'loginHtml')));
+//rama cris//
 
 // Agregar esta línea después de los middlewares
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {

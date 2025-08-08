@@ -295,34 +295,9 @@
                 
                 
                 <div class="two-columns">
-                    <div class="form-group">
+                        <div class="form-group">
                         <label for="provincia">Provincia</label>
-                        <select id="provincia" name="provincia" required>
-                            <option value="">Seleccione provincia</option>
-                            <option value="Buenos Aires">Buenos Aires</option>
-                            <option value="Catamarca">Catamarca</option>
-                            <option value="Chaco">Chaco</option>
-                            <option value="Chubut">Chubut</option>
-                            <option value="Córdoba">Córdoba</option>
-                            <option value="Corrientes">Corrientes</option>
-                            <option value="Entre Ríos">Entre Ríos</option>
-                            <option value="Formosa">Formosa</option>
-                            <option value="Jujuy">Jujuy</option>
-                            <option value="La Pampa">La Pampa</option>
-                            <option value="La Rioja">La Rioja</option>
-                            <option value="Mendoza">Mendoza</option>
-                            <option value="Misiones">Misiones</option>
-                            <option value="Neuquén">Neuquén</option>
-                            <option value="Río Negro">Río Negro</option>
-                            <option value="Salta">Salta</option>
-                            <option value="San Juan">San Juan</option>
-                            <option value="San Luis">San Luis</option>
-                            <option value="Santa Cruz">Santa Cruz</option>
-                            <option value="Santa Fe">Santa Fe</option>
-                            <option value="Santiago del Estero">Santiago del Estero</option>
-                            <option value="Tierra del Fuego">Tierra del Fuego</option>
-                            <option value="Tucumán">Tucumán</option>
-                        </select>
+                        <input type="text" id="provincia" name="provincia" placeholder="Ingrese provincia" required>
                     </div>
                     
                     <div class="form-group">
@@ -331,6 +306,12 @@
                     </div>
                 </div>
                 
+                    <div class="form-group">
+                    <label for="localidad">Municipio</label>
+                    <input type="text" id="municipio" name="municipio" placeholder="Ingrese municipio" required>
+                </div>
+
+
                 <div class="form-group">
                     <label for="localidad">Localidad</label>
                     <input type="text" id="localidad" name="localidad" placeholder="Ingrese localidad" required>
@@ -419,6 +400,7 @@
                 }
                 
                 const person = await response.json();
+                console.log('Datos de la persona:', person);
                 
                 // Rellenar el formulario
                 document.getElementById('id').value = person.id;
@@ -426,8 +408,9 @@
                 document.getElementById('apellido').value = person.apellido;
                 document.getElementById('dni').value = person.dni;
                 document.getElementById('calle').value = person.calle;
-                document.getElementById('provincia').value = person.provincia;
-                document.getElementById('departamento').value = person.departamento;
+                document.getElementById('provincia').value = person.provincia_nombre;
+                document.getElementById('departamento').value = person.departamento_nombre;
+                document.getElementById('municipio').value = person.municipio_nombre;
                 document.getElementById('localidad').value = person.localidad;
                 document.getElementById('genero').value = person.genero;
                 document.getElementById('fecha_nacimiento').value = formatDateForInput(person.fecha_nacimiento);

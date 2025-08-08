@@ -1016,7 +1016,7 @@
     // Función para cargar provincias
     async function cargarProvincias() {
         try {
-            const resp = await fetch('../api/provincia');
+            const resp = await fetch('http://localhost:3000/api/provincias'); // Cambiado: URL de la API
             const provincias = await resp.json();
             
             provinciaSelect.innerHTML = '<option value="">--Seleccione--</option>';
@@ -1035,7 +1035,7 @@
     // Función para cargar departamentos por provincia
     async function cargarDepartamentos(provinciaId) {
         try {
-            const resp = await fetch(`../api/departamentos?provinciaId=${provinciaId}`);
+            const resp = await fetch(`http://localhost:3000/api/departamentos?provinciaId=${provinciaId}`);
             const departamentos = await resp.json();
             
             departamentoSelect.innerHTML = '<option value="">--Seleccione--</option>';
@@ -1062,7 +1062,7 @@
     // Función para cargar municipios por departamento
     async function cargarMunicipios(departamentoId) {
         try {
-            const resp = await fetch(`../api/municipios?departamentoId=${departamentoId}`);
+            const resp = await fetch(`http://localhost:3000/api/municipios?departamentoId=${departamentoId}`);
             const municipios = await resp.json();
             
             municipioSelect.innerHTML = '<option value="">--Seleccione--</option>';
@@ -1084,7 +1084,7 @@
     // Función para cargar localidades por municipio
     async function cargarLocalidades(municipioId) {
         try {
-            const resp = await fetch(`../api/localidades?municipioId=${municipioId}`);
+            const resp = await fetch(`http://localhost:3000/api/localidades?municipioId=${municipioId}`);
             const localidades = await resp.json();
             
             localidadSelect.innerHTML = '<option value="">--Seleccione--</option>';
